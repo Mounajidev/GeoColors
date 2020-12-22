@@ -8,75 +8,79 @@ public class PlayerCtrl : MonoBehaviour
     public Rigidbody rb;
     float moveH;
     [Header("Configuration")]
-    public float velocity = 5f;
-    public float gravityMultiply=0;
-    public float angularSpeed;
-    public float forceJump;
-     
-    public RaycastDetection raydect;
+    public float velocityN = 5f;
    
+    public float gravityMultiply=0;
+    //public float angularSpeed;
+    public float forceJumpN;
+    public RaycastDetection raydect;
     FormCtrl formControl;// actformT;
+    /// <summary>
+    /// esfera
+    /// </summary>
+    float radius = 1.0f;
+    public float velocityEsphere = 10f;
 
-    // Start is called before the first frame update
     void Start()
     {
         
         rb = GetComponent<Rigidbody>();
-        formControl = new FormCtrl();// actformT = formCtrla.actformT;
-        raydect = GetComponent<RaycastDetection>();
-         
-         
+        formControl = this.GetComponent<FormCtrl>();
+        raydect = GetComponent<RaycastDetection>();                 
         //transform.Find("SphereForm");
+       
+         
     }
         // Update is called once per frame
         void Update()
-            {
-                Move();               
-                Jump();
-        Debug.Log(formControl.actformT);
-            }
+        {
+            Move();
+            Jump();
+            rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
+         }
     private void FixedUpdate()
     {
-        rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
+       
     }
-   
     void Move()
     {
-        moveH = Input.GetAxis("Horizontal");
-       
-        if (formControl.actformT == FormCtrl.formType.normal) {         
-            rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;          
+       // moveH = Input.GetAxis("Horizontal");
+       // bool detect = this.raydect.ifRaycast();
+       // Debug.Log(detect);
+        if (formControl.actformT == FormCtrl.formType.normal) 
+        {
+            Debug.Log("moviendome");
+            rb.transform.position += transform.forward * velocityN * moveH * Time.deltaTime;          
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
-        else if(formControl.actformT == FormCtrl.formType.sphere)
+        else if(formControl.actformT == FormCtrl.formType.sphere  )
         {
-            velocity = 15f;
-            rb.AddForce(Vector3.forward * moveH * velocity);                         
-            rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+           // rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            //rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
+           // rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
+            //rb.AddTorque(transform.right * moveH * velocityEsphere);
+            
+             
         }
     }
     void Jump()
     {
-        Collider[] coll= this.raydect.SphereDectected();
-        
-        if (formControl.actformT == FormCtrl.formType.normal)
-            forceJump = 8f;
-        else if (formControl.actformT == FormCtrl.formType.sphere)
-            forceJump = 12f;
-
-        if (coll.Length>0)
+        // Collider[] coll= this.raydect.SphereDectected();
+        //  Debug.Log(formControl.actformT);
+        bool detect= this.raydect.ifRaycast();
+       if (detect)
         {
-         foreach(Collider c in coll)
+            if ((formControl.actformT == FormCtrl.formType.normal))
             {
-                if (c.gameObject.layer == Constans.LAYERFLOOR && Input.GetKeyDown(KeyCode.Space))//cambiar el input
+
+                if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
-                    Debug.Log("salte");
-                    rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
+                    rb.AddForce(transform.up * forceJumpN, ForceMode.Impulse);
                 }
             }
-            
         }
-        
+       
+                   
     }
 
     public void OnTriggerEnter(Collider other)
@@ -86,7 +90,6 @@ public class PlayerCtrl : MonoBehaviour
         //la condicion del if debe fijarse si se puede tomar el color o no 
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE)
             this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
-
     }
 }
 

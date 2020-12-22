@@ -12,17 +12,19 @@ public class FormCtrl : MonoBehaviour
     Transform normal, sphere;
    // [HideInInspector]
     public formType actformT;//forma actual del personaje
-
+    Quaternion originalRotation;
     void Start()
     {
         normal = transform.Find("robotdessin");
         sphere = transform.Find("SphereForm");
         #region forma inicial y su configuracion
-        transform.GetComponent<SphereCollider>().enabled = true;
-        transform.GetComponent<CapsuleCollider>().enabled = false;
+        transform.GetComponent<CapsuleCollider>().enabled = true;
+        SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
+        foreach (SphereCollider bc in myColliders) bc.enabled = false;    
         actformT = formType.normal;
         normal.gameObject.SetActive(true);
         sphere.gameObject.SetActive(false);
+        originalRotation = transform.rotation;
         #endregion
     }
 
@@ -33,6 +35,11 @@ public class FormCtrl : MonoBehaviour
         {
             ChangeForm(actformT);
         }
+       // Debug.Log(actformT);
+    }
+    private void LateUpdate()
+    {
+         
     }
     public void ChangeForm(formType formt)
     {
@@ -40,20 +47,24 @@ public class FormCtrl : MonoBehaviour
         //por ahora solo voy a probar con la esfera      
             if (formt == formType.normal)
             {
-                actformT = formType.sphere;
-                transform.GetComponent<SphereCollider>().enabled = false;
-                transform.GetComponent<CapsuleCollider>().enabled = true;
-                normal.gameObject.SetActive(false);
-                sphere.gameObject.SetActive(true);
-            }
+                    transform.GetComponent<CapsuleCollider>().enabled = false;
+                    SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
+                    foreach (SphereCollider cc in myColliders) cc.enabled = true;
+                    normal.gameObject.SetActive(false);
+                    sphere.gameObject.SetActive(true);
+                    actformT = formType.sphere;
+                   
+        }
             else if (formt == formType.sphere)
-            {             
-                transform.GetComponent<SphereCollider>().enabled = true;
-                transform.GetComponent<CapsuleCollider>().enabled = false;
-                actformT = formType.normal;
-                normal.gameObject.SetActive(true);
-                sphere.gameObject.SetActive(false);            
-            }
-        Debug.Log(actformT);
+            {
+            actformT = formType.normal;
+            transform.GetComponent<CapsuleCollider>().enabled = true;
+            SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
+            foreach (SphereCollider cc in myColliders) cc.enabled = false;
+            normal.gameObject.SetActive(true);
+            sphere.gameObject.SetActive(false);
+            transform.rotation = originalRotation;
+        }
+      
     }
 }
