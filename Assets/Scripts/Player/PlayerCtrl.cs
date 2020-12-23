@@ -6,7 +6,7 @@ public class PlayerCtrl : MonoBehaviour
 {
    
     public Rigidbody rb;
-    float moveH;
+    public float moveH;
     [Header("Configuration")]
     public float velocityN = 5f;
    
