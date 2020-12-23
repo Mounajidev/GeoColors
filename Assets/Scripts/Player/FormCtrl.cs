@@ -22,8 +22,8 @@ public class FormCtrl : MonoBehaviour
         SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
         foreach (SphereCollider bc in myColliders) bc.enabled = false;    
         actformT = formType.normal;
-        normal.gameObject.SetActive(true);
-        sphere.gameObject.SetActive(false);
+         normal.gameObject.SetActive(true);
+         sphere.gameObject.SetActive(false);
         originalRotation = transform.rotation;
         #endregion
     }
@@ -47,8 +47,8 @@ public class FormCtrl : MonoBehaviour
         //por ahora solo voy a probar con la esfera      
             if (formt == formType.normal)
             {
-                    transform.GetComponent<CapsuleCollider>().enabled = false;
-                    SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
+                   transform.GetComponent<CapsuleCollider>().enabled = false;
+                   SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
                     foreach (SphereCollider cc in myColliders) cc.enabled = true;
                     normal.gameObject.SetActive(false);
                     sphere.gameObject.SetActive(true);

@@ -44,14 +44,10 @@ public class PlayerCtrl : MonoBehaviour
     }
     void Move()
     {
-       // moveH = Input.GetAxis("Horizontal");
-       // bool detect = this.raydect.ifRaycast();
-       // Debug.Log(detect);
+        moveH = Input.GetAxis("Horizontal");      
         if (formControl.actformT == FormCtrl.formType.normal) 
-        {
-            Debug.Log("moviendome");
-            rb.transform.position += transform.forward * velocityN * moveH * Time.deltaTime;          
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        {     
+            rb.transform.position += transform.forward * velocityN * moveH * Time.deltaTime;                     
         }
         else if(formControl.actformT == FormCtrl.formType.sphere  )
         {
@@ -68,19 +64,19 @@ public class PlayerCtrl : MonoBehaviour
         // Collider[] coll= this.raydect.SphereDectected();
         //  Debug.Log(formControl.actformT);
         bool detect= this.raydect.ifRaycast();
-       if (detect)
-        {
-            if ((formControl.actformT == FormCtrl.formType.normal))
+       
+         if ((formControl.actformT == FormCtrl.formType.normal))
+         {
+            if(detect)
             {
-
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
                     rb.AddForce(transform.up * forceJumpN, ForceMode.Impulse);
                 }
             }
         }
-       
-                   
+
+
     }
 
     public void OnTriggerEnter(Collider other)

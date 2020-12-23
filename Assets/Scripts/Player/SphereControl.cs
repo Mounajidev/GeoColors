@@ -33,39 +33,55 @@ public class SphereControl : MonoBehaviour
 	int jumpPhase;
 
 	float minGroundDotProduct;
+	FormCtrl formControl;
+	void Start()
+	{
+		formControl = this.GetComponent<FormCtrl>();
+	}
 
-	void OnValidate () {
+	void OnValidate () 
+	{
 		minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
 	}
 
 	void Awake () {
-		body = GetComponent<Rigidbody>();
-		OnValidate();
+		if ((formControl.actformT == FormCtrl.formType.sphere)) {
+			body = GetComponent<Rigidbody>();
+			OnValidate();
+		}
+			
 	}
 
 	void Update () {
-		Vector2 playerInput;
-		playerInput.x = Input.GetAxis("Vertical");
-		playerInput.y = Input.GetAxis("Horizontal");
-		playerInput = Vector2.ClampMagnitude(playerInput, 1f);
+		if ((formControl.actformT == FormCtrl.formType.sphere))
+		{
+			Vector2 playerInput;
+			playerInput.x = Input.GetAxis("Vertical");
+			playerInput.y = Input.GetAxis("Horizontal");
+			playerInput = Vector2.ClampMagnitude(playerInput, 1f);
 
-		desiredVelocity =
-			new Vector3(0, 0f, playerInput.y) * maxSpeed;
+			desiredVelocity =
+				new Vector3(0, 0f, playerInput.y) * maxSpeed;
 
-		desiredJump |= Input.GetButtonDown("Jump");
+			desiredJump |= Input.GetButtonDown("Jump");
+		}
 	}
 
-	void FixedUpdate () {
-		UpdateState();
-		AdjustVelocity();
+	void FixedUpdate () 
+	{
+		if ((formControl.actformT == FormCtrl.formType.sphere))
+		{
+				UpdateState();
+			AdjustVelocity();
 
-		if (desiredJump) {
-			desiredJump = false;
-			Jump();
+			if (desiredJump) {
+				desiredJump = false;
+				Jump();
+			}
+
+			body.velocity = velocity;
+			ClearState();
 		}
-
-		body.velocity = velocity;
-		ClearState();
 	}
 
 	void ClearState () {
@@ -117,11 +133,17 @@ public class SphereControl : MonoBehaviour
 	}
 
 	void OnCollisionEnter (Collision collision) {
-		EvaluateCollision(collision);
+		if ((formControl.actformT == FormCtrl.formType.sphere))
+		{
+			EvaluateCollision(collision);
+		}
 	}
 
 	void OnCollisionStay (Collision collision) {
-		EvaluateCollision(collision);
+		if ((formControl.actformT == FormCtrl.formType.sphere))
+		{
+			EvaluateCollision(collision);
+		}
 	}
 
 	void EvaluateCollision (Collision collision) {
