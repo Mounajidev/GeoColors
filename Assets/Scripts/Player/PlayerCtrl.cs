@@ -50,15 +50,16 @@ public class PlayerCtrl : MonoBehaviour
         if (formControl.actformT == FormCtrl.formType.normal) 
         {
             Debug.Log("moviendome");
+            
             rb.transform.position += transform.forward * velocityN * moveH * Time.deltaTime;          
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
         else if(formControl.actformT == FormCtrl.formType.sphere  )
         {
-           // rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-            //rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
-           // rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
-            //rb.AddTorque(transform.right * moveH * velocityEsphere);
+           rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
+           rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
+            rb.AddTorque(transform.right * moveH * velocityEsphere);
             
              
         }
