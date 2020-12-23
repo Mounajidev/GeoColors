@@ -16,7 +16,7 @@ public class FormCtrl : MonoBehaviour
     Quaternion originalRotation;
     void Start()
     {
-        normal = transform.Find("robotdessin");
+        normal = transform.Find("Cuerpo");
         sphere = transform.Find("SphereForm");
         rb = GetComponent<Rigidbody>();
         #region forma inicial y su configuracion

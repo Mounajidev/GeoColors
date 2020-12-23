@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
+    Animator anim;
 
     public Rigidbody rb;
     public float moveH;
@@ -14,15 +15,17 @@ public class PlayerCtrl : MonoBehaviour
     public float forceJump;
     public RaycastDetection raydect;
     FormCtrl formControl;// actformT;  
+    
   
     void Start()
     {
+        
 
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
-        //transform.Find("SphereForm");
-     
+        anim = transform.Find("Cuerpo").Find("Legs").GetComponent<Animator>();
+
 
     }
     // Update is called once per frame
@@ -42,6 +45,9 @@ public class PlayerCtrl : MonoBehaviour
         if (formControl.actformT == FormCtrl.formType.normal)
         {
             rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;
+            anim.Play("walkRightAnim");
+            Debug.Log(anim);
+
         }
         else if (formControl.actformT == FormCtrl.formType.sphere)
         {
