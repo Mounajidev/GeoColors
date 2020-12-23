@@ -9,6 +9,7 @@ public class FormCtrl : MonoBehaviour
     {
         normal, sphere
     }
+    public Rigidbody rb;
     Transform normal, sphere;
    // [HideInInspector]
     public formType actformT;//forma actual del personaje
@@ -17,14 +18,16 @@ public class FormCtrl : MonoBehaviour
     {
         normal = transform.Find("robotdessin");
         sphere = transform.Find("SphereForm");
+        rb = GetComponent<Rigidbody>();
         #region forma inicial y su configuracion
         transform.GetComponent<CapsuleCollider>().enabled = true;
         SphereCollider[] myColliders = gameObject.GetComponents<SphereCollider>();
         foreach (SphereCollider bc in myColliders) bc.enabled = false;    
         actformT = formType.normal;
-         normal.gameObject.SetActive(true);
-         sphere.gameObject.SetActive(false);
+        normal.gameObject.SetActive(true);
+        sphere.gameObject.SetActive(false);
         originalRotation = transform.rotation;
+        rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
         #endregion
     }
 
@@ -53,7 +56,8 @@ public class FormCtrl : MonoBehaviour
                     normal.gameObject.SetActive(false);
                     sphere.gameObject.SetActive(true);
                     actformT = formType.sphere;
-                   
+                    //cambiar
+                    rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ ;
         }
             else if (formt == formType.sphere)
             {
@@ -64,6 +68,8 @@ public class FormCtrl : MonoBehaviour
             normal.gameObject.SetActive(true);
             sphere.gameObject.SetActive(false);
             transform.rotation = originalRotation;
+            //cambiar
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         }
       
     }
