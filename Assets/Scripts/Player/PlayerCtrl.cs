@@ -8,7 +8,7 @@ public class PlayerCtrl : MonoBehaviour
     public Rigidbody rb;
     float moveH ;
     [Header("Configuration")]
-    public float velocityN = 5f;
+    public float velocity= 5f;
    
     public float gravityMultiply=0;
     public float forceJump;
@@ -27,20 +27,20 @@ public class PlayerCtrl : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-            Move();
-            Jump();
-            rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
-         }
+        Jump();
+        }
     private void FixedUpdate()
     {
-       
+        Move();
+        
+        rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
     }
     void Move()
     {
         moveH = Input.GetAxis("Horizontal");      
-        if (formControl.actformT == FormCtrl.formType.normal) 
+        if (formControl.actformT == FormCtrl.formType.normal ) 
         {     
-            rb.transform.position += transform.forward * velocityN * moveH * Time.deltaTime;                     
+            rb.transform.position += transform.forward * velocity* moveH * Time.deltaTime;                     
         }
         else if(formControl.actformT == FormCtrl.formType.sphere  )
         {
@@ -60,13 +60,16 @@ public class PlayerCtrl : MonoBehaviour
        
          if ((formControl.actformT == FormCtrl.formType.normal))
          {
-            if(detect)
+            if (detect)
             {
+
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
                     rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
                 }
             }
+            else
+                Debug.Log("no piso");
         }
 
 
