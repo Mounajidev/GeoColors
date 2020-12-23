@@ -20,13 +20,10 @@ public class PlayerCtrl : MonoBehaviour
     void Start()
     {
         
-
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
-        anim = transform.Find("Cuerpo").GetComponent<Animator>();
-
-
+        anim = transform.Find("Cuerpo").Find("Legs").GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
@@ -46,19 +43,15 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;
             
-                anim.Play("walkRightAnim");
-                Debug.Log(anim);
+            anim.SetFloat("Horizontal", moveH);
             
-           
+            //Debug.Log(anim);
         }
         else if (formControl.actformT == FormCtrl.formType.sphere)
-        {
-         
+        {         
             rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
             rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
             rb.AddTorque(transform.right * moveH * velocityEsphere);
-
-
         }
     }
     void Jump()
@@ -70,7 +63,6 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (detect)
             {
-
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
                     rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
