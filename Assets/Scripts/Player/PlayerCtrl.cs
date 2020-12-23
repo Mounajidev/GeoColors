@@ -24,7 +24,7 @@ public class PlayerCtrl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
-        anim = transform.Find("Cuerpo").Find("Legs").GetComponent<Animator>();
+        anim = transform.Find("Cuerpo").GetComponent<Animator>();
 
 
     }
@@ -45,9 +45,11 @@ public class PlayerCtrl : MonoBehaviour
         if (formControl.actformT == FormCtrl.formType.normal)
         {
             rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;
-            anim.Play("walkRightAnim");
-            Debug.Log(anim);
-
+            
+                anim.Play("walkRightAnim");
+                Debug.Log(anim);
+            
+           
         }
         else if (formControl.actformT == FormCtrl.formType.sphere)
         {
