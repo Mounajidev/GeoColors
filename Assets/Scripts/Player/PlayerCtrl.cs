@@ -6,21 +6,14 @@ public class PlayerCtrl : MonoBehaviour
 {
    
     public Rigidbody rb;
-    float moveH;
+    float moveH ;
     [Header("Configuration")]
     public float velocityN = 5f;
    
     public float gravityMultiply=0;
-    //public float angularSpeed;
-    public float forceJumpN;
+    public float forceJump;
     public RaycastDetection raydect;
-    FormCtrl formControl;// actformT;
-    /// <summary>
-    /// esfera
-    /// </summary>
-    float radius = 1.0f;
-    public float velocityEsphere = 10f;
-
+    FormCtrl formControl;// actformT;  
     void Start()
     {
         
@@ -51,6 +44,7 @@ public class PlayerCtrl : MonoBehaviour
         }
         else if(formControl.actformT == FormCtrl.formType.sphere  )
         {
+            //ver si se puede hacer aca 
            // rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
             //rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
            // rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
@@ -61,8 +55,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     void Jump()
     {
-        // Collider[] coll= this.raydect.SphereDectected();
-        //  Debug.Log(formControl.actformT);
+        
         bool detect= this.raydect.ifRaycast();
        
          if ((formControl.actformT == FormCtrl.formType.normal))
@@ -71,7 +64,7 @@ public class PlayerCtrl : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
-                    rb.AddForce(transform.up * forceJumpN, ForceMode.Impulse);
+                    rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
                 }
             }
         }
