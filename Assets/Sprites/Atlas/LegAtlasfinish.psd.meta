@@ -1,0 +1,668 @@
+fileFormatVersion: 2
+guid: 189e18ad623feb44db06555cf6fdec18
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2916990011976283307
+    second: LegAtlasfinish_0
+  - first:
+      213: 4023967748990322136
+    second: LegAtlasfinish_1
+  - first:
+      213: -2129904268938667554
+    second: LegAtlasfinish_2
+  - first:
+      213: -6390463733896494937
+    second: LegAtlasfinish_3
+  - first:
+      213: 5065124049706968134
+    second: LegAtlasfinish_4
+  - first:
+      213: -4928736954753835234
+    second: LegAtlasfinish_5
+  - first:
+      213: -7511979020073823053
+    second: LegAtlasfinish_6
+  - first:
+      213: -1699407749805653062
+    second: LegAtlasfinish_7
+  - first:
+      213: 5731671085259747383
+    second: LegAtlasfinish_8
+  - first:
+      213: -7367887803902340669
+    second: LegAtlasfinish_9
+  - first:
+      213: 1508906273725771812
+    second: LegAtlasfinish_10
+  - first:
+      213: 4495167721946211800
+    second: LegAtlasfinish_11
+  - first:
+      213: 401940007600806761
+    second: LegAtlasfinish_12
+  - first:
+      213: 4982424250051547303
+    second: LegAtlasfinish_13
+  - first:
+      213: -7214953569652796771
+    second: LegAtlasfinish_14
+  - first:
+      213: -8545722415992494568
+    second: LegAtlasfinish_15
+  - first:
+      213: 8553314714990237492
+    second: LegAtlasfinish_16
+  - first:
+      213: -5307016381236807205
+    second: LegAtlasfinish_17
+  - first:
+      213: -2071633168850801143
+    second: LegAtlasfinish_18
+  - first:
+      213: 6277339353221488478
+    second: LegAtlasfinish_19
+  - first:
+      213: -4605837742677094686
+    second: LegAtlasfinish_20
+  - first:
+      213: -5673106034991937210
+    second: LegAtlasfinish_21
+  - first:
+      213: -7526488803964467522
+    second: LegAtlasfinish_22
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 7
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LegAtlasfinish_0
+      rect:
+        serializedVersion: 2
+        x: 1610
+        y: 2512
+        width: 180
+        height: 118
+      alignment: 9
+      pivot: {x: 0.9317532, y: 0.7946384}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b8acaf905c487d0800000000000000
+      internalID: -2916990011976283307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_1
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 2435
+        width: 100
+        height: 222
+      alignment: 9
+      pivot: {x: 0.7454175, y: 0.92376876}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d5423a095108d730800000000000000
+      internalID: 4023967748990322136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_2
+      rect:
+        serializedVersion: 2
+        x: 2445
+        y: 2435
+        width: 190
+        height: 186
+      alignment: 9
+      pivot: {x: 0.32777807, y: 0.8628468}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed992542a5f0172e0800000000000000
+      internalID: -2129904268938667554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_3
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 2146
+        width: 129
+        height: 237
+      alignment: 9
+      pivot: {x: 0.484146, y: 0.9228361}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a0451797138057a0800000000000000
+      internalID: -6390463733896494937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_4
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 2158
+        width: 180
+        height: 225
+      alignment: 9
+      pivot: {x: 0.2841234, y: 0.9272081}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 644621eac7fea4640800000000000000
+      internalID: 5065124049706968134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_5
+      rect:
+        serializedVersion: 2
+        x: 2101
+        y: 2156
+        width: 192
+        height: 196
+      alignment: 9
+      pivot: {x: 0.95802814, y: 0.9278104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1f9e8c6adb999bb0800000000000000
+      internalID: -4928736954753835234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_6
+      rect:
+        serializedVersion: 2
+        x: 2463
+        y: 2159
+        width: 73
+        height: 222
+      alignment: 9
+      pivot: {x: 0.6680958, y: 0.89613134}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b41054a1e610c790800000000000000
+      internalID: -7511979020073823053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_7
+      rect:
+        serializedVersion: 2
+        x: 1599
+        y: 1890
+        width: 222
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab3c948c7ad7a68e0800000000000000
+      internalID: -1699407749805653062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_8
+      rect:
+        serializedVersion: 2
+        x: 1925
+        y: 1895
+        width: 89
+        height: 206
+      alignment: 9
+      pivot: {x: 0.70681316, y: 0.9467548}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 730f84efb7cfa8f40800000000000000
+      internalID: 5731671085259747383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_9
+      rect:
+        serializedVersion: 2
+        x: 2451
+        y: 1874
+        width: 93
+        height: 231
+      alignment: 9
+      pivot: {x: 0.6759256, y: 0.8718441}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c1d77f341100c990800000000000000
+      internalID: -7367887803902340669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_10
+      rect:
+        serializedVersion: 2
+        x: 1649
+        y: 1614
+        width: 82
+        height: 224
+      alignment: 9
+      pivot: {x: 0.5498806, y: 0.9017247}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42078cce246b0f410800000000000000
+      internalID: 1508906273725771812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_11
+      rect:
+        serializedVersion: 2
+        x: 1927
+        y: 1610
+        width: 88
+        height: 228
+      alignment: 9
+      pivot: {x: 0.7788835, y: 0.9395265}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d5e7680a3b026e30800000000000000
+      internalID: 4495167721946211800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_12
+      rect:
+        serializedVersion: 2
+        x: 2195
+        y: 1608
+        width: 166
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96b501eae4af39500800000000000000
+      internalID: 401940007600806761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_13
+      rect:
+        serializedVersion: 2
+        x: 2438
+        y: 1596
+        width: 128
+        height: 211
+      alignment: 9
+      pivot: {x: 0.8994427, y: 0.9371477}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a05d981570252540800000000000000
+      internalID: 4982424250051547303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_14
+      rect:
+        serializedVersion: 2
+        x: 1779
+        y: 2433
+        width: 76
+        height: 194
+      alignment: 9
+      pivot: {x: 0.58073026, y: 0.91113657}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9298e174f55fdb90800000000000000
+      internalID: -7214953569652796771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_15
+      rect:
+        serializedVersion: 2
+        x: 2051
+        y: 2437
+        width: 83
+        height: 222
+      alignment: 9
+      pivot: {x: 0.3028785, y: 0.91455626}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 816aca56dbe776980800000000000000
+      internalID: -8545722415992494568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_16
+      rect:
+        serializedVersion: 2
+        x: 2297
+        y: 2157
+        width: 136
+        height: 182
+      alignment: 9
+      pivot: {x: 0.09397799, y: 0.9270073}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4375d177a6a73b670800000000000000
+      internalID: 8553314714990237492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_17
+      rect:
+        serializedVersion: 2
+        x: 2558
+        y: 2175
+        width: 88
+        height: 200
+      alignment: 9
+      pivot: {x: 0.17463546, y: 0.9499316}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd9733318b0b956b0800000000000000
+      internalID: -5307016381236807205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_18
+      rect:
+        serializedVersion: 2
+        x: 2017
+        y: 1890
+        width: 105
+        height: 219
+      alignment: 9
+      pivot: {x: 0.22731352, y: 0.93891245}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e2bb1eb941043e0800000000000000
+      internalID: -2071633168850801143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_19
+      rect:
+        serializedVersion: 2
+        x: 2542
+        y: 1931
+        width: 123
+        height: 171
+      alignment: 9
+      pivot: {x: 0.13420191, y: 0.930557}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5fd85b02e69d1750800000000000000
+      internalID: 6277339353221488478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_20
+      rect:
+        serializedVersion: 2
+        x: 1739
+        y: 1612
+        width: 80
+        height: 226
+      alignment: 9
+      pivot: {x: 0.29548645, y: 0.907219}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ee05aec9f6c410c0800000000000000
+      internalID: -4605837742677094686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_21
+      rect:
+        serializedVersion: 2
+        x: 2019
+        y: 1609
+        width: 83
+        height: 229
+      alignment: 9
+      pivot: {x: 0.27823794, y: 0.93760717}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6494e2b5e141541b0800000000000000
+      internalID: -5673106034991937210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LegAtlasfinish_22
+      rect:
+        serializedVersion: 2
+        x: 2557
+        y: 1613
+        width: 128
+        height: 209
+      alignment: 9
+      pivot: {x: 0.16446877, y: 0.9207711}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb64eb15f4a8c8790800000000000000
+      internalID: -7526488803964467522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 43e4edffddafeea45aa69ee0f63d05fe
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

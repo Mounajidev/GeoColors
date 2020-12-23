@@ -6,14 +6,21 @@ public class PlayerCtrl : MonoBehaviour
 {
    
     public Rigidbody rb;
-    float moveH ;
+    float moveH;
     [Header("Configuration")]
     public float velocity= 5f;
    
     public float gravityMultiply=0;
-    public float forceJump;
+    //public float angularSpeed;
+    public float forceJumpN;
     public RaycastDetection raydect;
-    FormCtrl formControl;// actformT;  
+    FormCtrl formControl;// actformT;
+    /// <summary>
+    /// esfera
+    /// </summary>
+    float radius = 1.0f;
+    public float velocityEsphere = 10f;
+
     void Start()
     {
         
@@ -44,18 +51,18 @@ public class PlayerCtrl : MonoBehaviour
         }
         else if(formControl.actformT == FormCtrl.formType.sphere  )
         {
-            //ver si se puede hacer aca 
-           // rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-            //rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
-           // rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
-            //rb.AddTorque(transform.right * moveH * velocityEsphere);
+           rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
+           rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
+            rb.AddTorque(transform.right * moveH * velocityEsphere);
             
              
         }
     }
     void Jump()
     {
-        
+        // Collider[] coll= this.raydect.SphereDectected();
+        //  Debug.Log(formControl.actformT);
         bool detect= this.raydect.ifRaycast();
        
          if ((formControl.actformT == FormCtrl.formType.normal))
@@ -65,14 +72,14 @@ public class PlayerCtrl : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
-                    rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
+                    rb.AddForce(transform.up * forceJumpN, ForceMode.Impulse);
                 }
             }
             else
                 Debug.Log("no piso");
         }
-
-
+       
+                   
     }
 
     public void OnTriggerEnter(Collider other)
