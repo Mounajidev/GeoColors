@@ -15,6 +15,7 @@ public class PlayerCtrl : MonoBehaviour
     public float forceJump;
     public RaycastDetection raydect;
     FormCtrl formControl;// actformT;  
+    Color spColor;
     
   
     void Start()
@@ -81,6 +82,10 @@ public class PlayerCtrl : MonoBehaviour
         //la condicion del if debe fijarse si se puede tomar el color o no 
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE)
             this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
+        if (this.transform.Find("Cuerpo").gameObject.GetComponent<Renderer>() == other.gameObject.GetComponent<Renderer>())
+        {
+            Debug.Log("Traspaso Activado!");
+        }
     }
 }
 
