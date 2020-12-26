@@ -24,7 +24,7 @@ public class PlayerCtrl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
-        anim = transform.Find("Cuerpo").Find("Legs").GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
