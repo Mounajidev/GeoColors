@@ -43,8 +43,8 @@ public class PlayerCtrl : MonoBehaviour
         if (formControl.actformT == FormCtrl.formType.normal)
         {
             rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;
-            
-            anim.SetFloat("Horizontal", moveH);
+            anim.Play("wrAnim");
+            //anim.SetFloat("Horizontal", moveH);
             
             //Debug.Log(anim);
         }
