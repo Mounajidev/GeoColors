@@ -58,7 +58,7 @@ public class PlayerCtrl : MonoBehaviour
             //  rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;
             Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
             rb.MovePosition(transform.position + move);
-            anim.SetFloat("Horizontal", moveH);
+            //anim.SetFloat("Horizontal", moveH);
 
             //Debug.Log(anim);
         }
