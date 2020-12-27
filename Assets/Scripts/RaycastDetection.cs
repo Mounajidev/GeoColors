@@ -5,7 +5,7 @@ using UnityEngine;
 public class RaycastDetection : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Vector3 offset;
+    public Vector3 offset,offset2;
     RaycastHit hit;
     public float rayDist;
     public float rayDistFront;
@@ -53,7 +53,7 @@ public class RaycastDetection : MonoBehaviour
             return null;
 
     }
-    public bool BoxDetect()
+    public bool ifBoxDetect()
     {
         Collider[] detected;
         detected = Physics.OverlapBox(transform.position+ offset, new Vector3(detectionRadiusX, detectionRadiusY, detectionRadiusZ), transform.rotation, lmask);
@@ -68,29 +68,28 @@ public class RaycastDetection : MonoBehaviour
         }
             
     }
-    public Collider[] SphereDectected()
+    public Collider[] RetCollBoxDectected()
     {
         Collider[] detected;
-        detected = Physics.OverlapSphere(transform.position + offset, detectRadiusSphere);
-
-        if (detected.Length > 0)
-        {
-            return detected;
-        }
-        else
-        {
-            return detected;
-        }
+        detected = Physics.OverlapBox(transform.position + offset, new Vector3(detectionRadiusX, detectionRadiusY, detectionRadiusZ), transform.rotation, lmask2);
+        return detected;
+       
+    }
+    public Collider[] RetCollSphereDectected()
+    {
+        Collider[] detected;
+        detected = Physics.OverlapSphere(transform.position + offset2, detectRadiusSphere,lmask2);
+        return detected;         
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position + offset, -transform.up * rayDist + transform.position + offset);
+      //  Gizmos.color = Color.green;
+        //Gizmos.DrawLine(transform.position + offset, transform.forward * rayDistFront + transform.position + offset);
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position + offset, transform.forward * rayDistFront + transform.position + offset);
-        //Gizmos.color = Color.cyan;
-        //Gizmos.DrawWireCube(transform.position+ offset, new Vector3(detectionRadiusX, detectionRadiusY, detectionRadiusZ));
-        //Gizmos.DrawSphere(transform.position + offset, detectRadiusSphere);
+        Gizmos.DrawWireCube(transform.position+ offset, new Vector3(detectionRadiusX, detectionRadiusY, detectionRadiusZ) * 2f);
+        Gizmos.DrawSphere(transform.position + offset2, detectRadiusSphere);
     }
 }

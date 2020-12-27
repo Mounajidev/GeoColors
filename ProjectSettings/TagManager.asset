@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Casilla
+  - Blue
   layers:
   - Default
   - TransparentFX
@@ -16,10 +17,10 @@ TagManager:
   - 
   - Floor
   - Wall
-  - FloorBlue
-  - 
+  - Player
+  - Blue
   - ColorSphere
-  - 
+  - ColorThing
   - 
   - 
   - 
