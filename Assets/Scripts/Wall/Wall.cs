@@ -28,7 +28,7 @@ public abstract class Wall
     }
     public virtual void compareColor( Material texturaPersonaje)
     {
-        Debug.Log(texturaPersonaje);
+      //  Debug.Log(texturaPersonaje);
         if (texturaActual.color == texturaPersonaje.color)
             desactivar();
         else
