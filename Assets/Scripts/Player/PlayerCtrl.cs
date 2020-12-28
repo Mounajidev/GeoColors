@@ -32,7 +32,7 @@ public class PlayerCtrl : MonoBehaviour
     {
 
       Jump();
-     // DetectColorThing();//detecta por ahora las cosas que quiera traspasar
+      DetectColorThing();//detecta por ahora las cosas que quiera traspasar
     }
 
 
