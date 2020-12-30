@@ -50,12 +50,26 @@ public class PlayerCtrl : MonoBehaviour
 
     }
     public void escogerColor()
-    {
-        if (Input.GetKeyDown(KeyCode.W)) {
-            player.reodenarColor();
-            player.escogerColor();
+    {       
+        coll = raydect.RetCollBoxDectected();
+        bool chocar=false;
+        foreach (Collider c in coll)
+        {
+            if (c.gameObject.GetComponent<Renderer>().sharedMaterial == this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial)
+            {
+                chocar = true;
+                break;
+            }
         }
+         if (Input.GetKeyDown(KeyCode.W) && !chocar)
+         {
+           player.reodenarColor();
+           player.escogerColor();
+            chocar = false;
+         }
+        Debug.Log(chocar);
     }
+    
     public void Dash() {
         if (Input.GetKeyDown(KeyCode.Q) && activeDash == true) {
             StartCoroutine(Invoke());

@@ -24,10 +24,11 @@ public class LevelMagament : MonoBehaviour
     }
 
     public void ParedesDelMismoColor()
-    {   
+    {
+    //    Debug.Log(player.gameObject.transform.GetChild(0).GetComponent < Renderer>().sharedMaterial.name);
     foreach (GameObject casilla in casillas)
     {
-        if (player.gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color == casilla.gameObject.GetComponent<Renderer>().sharedMaterial.color)
+        if (player.gameObject.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color == casilla.gameObject.GetComponent<Renderer>().sharedMaterial.color)
         {
             casilla.gameObject.GetComponent<Collider>().isTrigger = true;
         }

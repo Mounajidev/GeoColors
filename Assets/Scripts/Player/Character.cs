@@ -7,17 +7,21 @@ public class Character
     GameObject character;
     float hp;
     float velocity;
-    Material materialActual;
+    //Material materialActual; esta variable puede servir si quiero mas de 2 colores
     List<Material> materiales;
     
     public Character(GameObject charac) {
         this.character = charac;
         materiales = new List<Material>();
+      
     }
     public bool existeColor(Material mat)
     {
 
         return materiales.Exists(x => x == mat);
+    }
+    public Material obtenermaterialActual() {
+        return materiales[0];
     }
     public void almacenarColores(Material mat)
     {
@@ -35,7 +39,7 @@ public class Character
            
     }
     public void escogerColor() {
-        character.GetComponentInChildren<Renderer>().sharedMaterial = materiales[0];
+        character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0]; 
     }
     public void  reodenarColor() 
     {
