@@ -10,24 +10,25 @@ public class LevelMagament : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        casillas = GameObject.FindGameObjectsWithTag("CasillaDeColor");        
     }
 
     // Update is called once per frame
     void Update()
     {
+       
+    }
+    private void FixedUpdate()
+    {
         ParedesDelMismoColor();
     }
 
-
-public void ParedesDelMismoColor()
-{
-    player = GameObject.FindGameObjectWithTag("Player");
-    casillas = GameObject.FindGameObjectsWithTag("Casilla");
-    
+    public void ParedesDelMismoColor()
+    {
+    //    Debug.Log(player.gameObject.transform.GetChild(0).GetComponent < Renderer>().sharedMaterial.name);
     foreach (GameObject casilla in casillas)
     {
-        if (player.gameObject.GetComponentInChildren<Renderer>().sharedMaterial.color == casilla.gameObject.GetComponent<Renderer>().sharedMaterial.color)
+        if (player.gameObject.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color == casilla.gameObject.GetComponent<Renderer>().sharedMaterial.color)
         {
             casilla.gameObject.GetComponent<Collider>().isTrigger = true;
         }

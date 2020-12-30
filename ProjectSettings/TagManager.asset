@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Casilla
   - Blue
+  - CasillaDeColor
   layers:
   - Default
   - TransparentFX
