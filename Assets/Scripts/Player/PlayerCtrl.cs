@@ -61,12 +61,15 @@ public class PlayerCtrl : MonoBehaviour
             //  rb.transform.position += transform.forward * velocity * moveH * Time.deltaTime;
             Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
             rb.MovePosition(transform.position + move);
-            if (moveH > 0.1)
-                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            else if(moveH < -0.1)
-                 transform.rotation = Quaternion.Euler(0f, -180f, 0f);
-            //anim.SetFloat("Horizontal", moveH);
+        if (moveH > 0.1)
+        {
             anim.SetFloat("PlayerMove", moveH);
+        }
+        //    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        //else if(moveH < -0.1)
+        //     transform.rotation = Quaternion.Euler(0f, -180f, 0f);
+        //anim.SetFloat("Horizontal", moveH);
+        //anim.SetFloat("PlayerMove", moveH);
 
             //Debug.Log(anim);
         
