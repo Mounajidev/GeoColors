@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
-{
-    Animator anim;
+{ 
     public Rigidbody rb;
     public float moveH;
     Collider[] coll;
@@ -13,7 +12,7 @@ public class PlayerCtrl : MonoBehaviour
     public float velocityEsphere = 5f;
     public float gravityMultiply = 0;
     public float forceJump;
-
+    Animator anim;
     public float dashForce;
     public float dashDuration;
     public RaycastDetection raydect;
@@ -22,11 +21,12 @@ public class PlayerCtrl : MonoBehaviour
     Character player;
     void Start()
     {
+        anim = GetComponent<Animator>();
         player = new Character(this.gameObject);
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
-        anim = GetComponent<Animator>();
+ 
 
     }
     ///Hojo hay que cambiar todos los imput para que funcione en android por ahora esta todo como si fuera un teclado
@@ -35,6 +35,8 @@ public class PlayerCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+
         escogerColor();
         Jump();
         Dash();
@@ -43,7 +45,7 @@ public class PlayerCtrl : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        
         Move();
         rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
 
@@ -67,7 +69,7 @@ public class PlayerCtrl : MonoBehaviour
             player.escogerColor();
             chocar = false;
         }
-        Debug.Log(chocar);
+ 
     }
 
     public void Dash()
@@ -89,15 +91,39 @@ public class PlayerCtrl : MonoBehaviour
     }
     void Move()
     {
+ 
         moveH = Input.GetAxis("Horizontal");
         //if (formControl.actformT == FormCtrl.formType.normal)
-        Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
-        rb.MovePosition(transform.position + move);
-        if (moveH > 0.1)
+
+       /* if (moveH >= 0.1)
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        else if (moveH <= -0.1)
+            transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
+        Debug.Log(transform.rotation.eulerAngles.y);
+        //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
+        //que maneje las animaciones del mapa 
+        if (moveH > 0.1 )
+        {
+           anim.SetBool("IdleDer", true);
+            anim.SetBool("IdleLeft", false);
+            anim.SetFloat("MoveR", moveH);
+        }
+
         else if (moveH < -0.1)
-            transform.rotation = Quaternion.Euler(0f, -180f, 0f);
-        anim.SetFloat("PlayerMove", moveH);
+        {
+           anim.SetBool("IdleDer", false);
+           anim.SetBool("IdleLeft", true);
+            anim.SetFloat("MoveL", moveH);
+        }
+    
+ 
+        
+        Debug.Log(moveH);
+        Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
+       
+        rb.MovePosition(transform.position + move);
+        
+       // anim.SetFloat("PlayerMove", moveH);
         //}
         //else if (formControl.actformT == FormCtrl.formType.sphere)
         //{
