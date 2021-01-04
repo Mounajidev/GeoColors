@@ -13,11 +13,11 @@ public class PlayerCtrl : MonoBehaviour
     public float gravityMultiply = 0;
     public float forceJump;
     Animator anim;
-    public float dashForce;
-    public float dashDuration;
+    public float dashForce = 9f;
+    public float dashDuration = 0.2f;
     public RaycastDetection raydect;
     FormCtrl formControl;// actformT; 
-    public bool activedoubleJump, activeDash;
+    public bool activedoubleJump, activeDash = true;
     Character player;
     void Start()
     {
@@ -77,6 +77,7 @@ public class PlayerCtrl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && activeDash == true)
         {
             StartCoroutine(Invoke());
+            anim.SetBool("Dash", true);
         }
 
     }
@@ -144,7 +145,8 @@ public class PlayerCtrl : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
                     rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
-                    //  anim.Play("Jump");
+                    anim.SetBool("Jump",true);
+
                 }
             }
             else if (!detect && activedoubleJump)
