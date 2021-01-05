@@ -5,7 +5,7 @@ using UnityEngine;
 public class RaycastDetection : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Vector3 offset,offset2;
+    public Vector3 offset,offset2,offset3;
     RaycastHit hit;
     public float rayDist;
     public float rayDistFront;
@@ -26,7 +26,7 @@ public class RaycastDetection : MonoBehaviour
     public bool ifRaycast()
     {
 
-        Physics.Raycast(transform.position + offset, -transform.up, out hit, rayDist, lmask);
+        Physics.Raycast(transform.position + offset3, -transform.up, out hit, rayDist, lmask);
 
         if (hit.collider != null )
         {       
@@ -85,7 +85,7 @@ public class RaycastDetection : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + offset, -transform.up * rayDist + transform.position + offset);
+        Gizmos.DrawLine(transform.position + offset3, -transform.up * rayDist + transform.position + offset3);
       //  Gizmos.color = Color.green;
         //Gizmos.DrawLine(transform.position + offset, transform.forward * rayDistFront + transform.position + offset);
         Gizmos.color = Color.green;

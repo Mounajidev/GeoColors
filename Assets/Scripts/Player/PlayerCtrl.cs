@@ -20,6 +20,7 @@ public class PlayerCtrl : MonoBehaviour
     FormCtrl formControl;// actformT; 
     public bool activedoubleJump, activeDash = true;
     Character player;
+    private int facing;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -88,7 +89,7 @@ public class PlayerCtrl : MonoBehaviour
     public IEnumerator Invoke()
     {
 
-        rb.AddForce(transform.forward * dashForce*moveH, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * dashForce*facing, ForceMode.VelocityChange);
         activeDash = false;
         yield return new WaitForSeconds(dashDuration);
         rb.velocity = Vector3.zero;
@@ -186,6 +187,10 @@ public class PlayerCtrl : MonoBehaviour
     {
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
+        if (m_FacingRight)
+            facing = 1;
+        else
+            facing = -1;
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
         theScale.z *= -1;
