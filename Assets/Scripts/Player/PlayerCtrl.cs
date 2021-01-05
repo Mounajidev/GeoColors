@@ -35,10 +35,8 @@ public class PlayerCtrl : MonoBehaviour
     ///
     // Update is called once per frame
     void Update()
-    {
-      
-
-        escogerColor();
+    {      
+        EscogerColor();
         Jump();
         Dash();
     }
@@ -56,7 +54,8 @@ public class PlayerCtrl : MonoBehaviour
     {
         rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
     }
-    public void escogerColor()
+   
+    public void EscogerColor()
     {
         coll = raydect.RetCollBoxDectected();
         bool chocar = false;
@@ -68,7 +67,7 @@ public class PlayerCtrl : MonoBehaviour
                 break;
             }
         }
-        if (Input.GetKeyDown(KeyCode.W) && !chocar)
+        if (Input.GetKeyDown(KeyCode.W) && !chocar && player.tengoColor())
         {
             player.reodenarColor();
             player.escogerColor();
@@ -89,7 +88,7 @@ public class PlayerCtrl : MonoBehaviour
     public IEnumerator Invoke()
     {
 
-        rb.AddForce(transform.forward * dashForce, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * dashForce*moveH, ForceMode.VelocityChange);
         activeDash = false;
         yield return new WaitForSeconds(dashDuration);
         rb.velocity = Vector3.zero;
@@ -100,34 +99,18 @@ public class PlayerCtrl : MonoBehaviour
  
         moveH = Input.GetAxis("Horizontal");
         //if (formControl.actformT == FormCtrl.formType.normal)
-
+        //{ 
        /* if (moveH >= 0.1)
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         else if (moveH <= -0.1)
             transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
         Debug.Log(transform.rotation.eulerAngles.y);
         //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
-        //que maneje las animaciones del mapa 
-        //if (moveH > 0.1 )
-        //{
-        //   anim.SetBool("IdleDer", true);
-        //    anim.SetBool("IdleLeft", false);
-        //    anim.SetFloat("MoveR", moveH);
-        //}
-
-        //else if (moveH < -0.1)
-        //{
-        //   anim.SetBool("IdleDer", false);
-        //   anim.SetBool("IdleLeft", true);
-        anim.SetFloat("MoveHorizontal", moveH * velocity);
-        //}
-
-
-
-        Debug.Log(moveH);
-        Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
-       
+        //que maneje las animaciones del mapa        
+        anim.SetFloat("MoveHorizontal", moveH * velocity);    
+        Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);       
         rb.MovePosition(transform.position + move);
+
         // If the input is moving the player right and the player is facing left...
         if (moveH > 0 && !m_FacingRight)
         {
@@ -141,7 +124,7 @@ public class PlayerCtrl : MonoBehaviour
             Flip();
         }
 
-        // anim.SetFloat("PlayerMove", moveH);
+         
         //}
         //else if (formControl.actformT == FormCtrl.formType.sphere)
         //{
@@ -203,22 +186,11 @@ public class PlayerCtrl : MonoBehaviour
     {
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
-
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
         theScale.z *= -1;
         transform.localScale = theScale;
     }
 
-    /* private void DetectColorThing()
- {
-     coll = raydect.RetCollBoxDectected();
-
-     foreach (Collider c in coll)
-     {
-         Material mat = this.GetComponentInChildren<Renderer>().sharedMaterial;
-         c.gameObject.GetComponent<ManagerColorThing>().detectColorThing(mat);
-     }
-
- }*/
+   
 }

@@ -38,6 +38,13 @@ public class Character
         
            
     }
+    public bool tengoColor()
+    {
+        if (materiales.Count > 0)
+            return true;
+        else
+            return false;
+    }
     public void escogerColor() {
         character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0]; 
     }
