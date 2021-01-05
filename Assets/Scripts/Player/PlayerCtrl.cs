@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
-{ 
+{
+    private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     public Rigidbody rb;
     public float moveH;
     Collider[] coll;
     [Header("Configuration")]
     public float velocity = 5f;
     public float velocityEsphere = 5f;
-    public float gravityMultiply = 0;
+    public float gravityMultiply = 2;
     public float forceJump;
     Animator anim;
     public float dashForce = 9f;
@@ -47,9 +48,13 @@ public class PlayerCtrl : MonoBehaviour
     {
         
         Move();
+        Gravity();
+
+
+    }
+    public void Gravity()
+    {
         rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
-
-
     }
     public void escogerColor()
     {
@@ -103,28 +108,40 @@ public class PlayerCtrl : MonoBehaviour
         Debug.Log(transform.rotation.eulerAngles.y);
         //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
         //que maneje las animaciones del mapa 
-        if (moveH > 0.1 )
-        {
-           anim.SetBool("IdleDer", true);
-            anim.SetBool("IdleLeft", false);
-            anim.SetFloat("MoveR", moveH);
-        }
+        //if (moveH > 0.1 )
+        //{
+        //   anim.SetBool("IdleDer", true);
+        //    anim.SetBool("IdleLeft", false);
+        //    anim.SetFloat("MoveR", moveH);
+        //}
 
-        else if (moveH < -0.1)
-        {
-           anim.SetBool("IdleDer", false);
-           anim.SetBool("IdleLeft", true);
-            anim.SetFloat("MoveL", moveH);
-        }
-    
- 
-        
+        //else if (moveH < -0.1)
+        //{
+        //   anim.SetBool("IdleDer", false);
+        //   anim.SetBool("IdleLeft", true);
+        anim.SetFloat("MoveHorizontal", moveH * velocity);
+        //}
+
+
+
         Debug.Log(moveH);
         Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
        
         rb.MovePosition(transform.position + move);
-        
-       // anim.SetFloat("PlayerMove", moveH);
+        // If the input is moving the player right and the player is facing left...
+        if (moveH > 0 && !m_FacingRight)
+        {
+            // ... flip the player.
+            Flip();
+        }
+        // Otherwise if the input is moving the player left and the player is facing right...
+        else if (moveH < 0 && m_FacingRight)
+        {
+            // ... flip the player.
+            Flip();
+        }
+
+        // anim.SetFloat("PlayerMove", moveH);
         //}
         //else if (formControl.actformT == FormCtrl.formType.sphere)
         //{
@@ -156,8 +173,8 @@ public class PlayerCtrl : MonoBehaviour
 
                     float forceJump2 = forceJump + forceJump * 0.1f;
                     rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
-                    //  anim.Play("Jump");
-                    activedoubleJump = false;
+                    anim.SetBool("DobleJump",true);
+                    //activedoubleJump = false;
                 }
             }
 
@@ -181,6 +198,16 @@ public class PlayerCtrl : MonoBehaviour
             //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
         }
 
+    }
+    private void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        m_FacingRight = !m_FacingRight;
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.z *= -1;
+        transform.localScale = theScale;
     }
 
     /* private void DetectColorThing()

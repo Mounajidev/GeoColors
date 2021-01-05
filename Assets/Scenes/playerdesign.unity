@@ -850,6 +850,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -33.007
       objectReference: {fileID: 0}
+    - target: {fileID: 255719314679756063, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d2321abc4ef9c514f9a4b74ed35b0fce, type: 2}
     - target: {fileID: 255719315581081428, guid: ce93448ffb1ba0d4aab232de70d7e556,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -980,6 +985,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 8.773001
       objectReference: {fileID: 0}
+    - target: {fileID: 869351847556760791, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 869351847556760791, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 869351848493279858, guid: ce93448ffb1ba0d4aab232de70d7e556,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1074,6 +1089,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 869351848657086760, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4670994006654710812, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: activedoubleJump
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7363674169355191769, guid: ce93448ffb1ba0d4aab232de70d7e556,
         type: 3}
