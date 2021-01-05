@@ -3186,6 +3186,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242140849}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &263671271 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7363674169355191769, guid: ce93448ffb1ba0d4aab232de70d7e556,
+    type: 3}
+  m_PrefabInstance: {fileID: 363376165}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &278821233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,6 +3979,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 255719314679756063, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d2321abc4ef9c514f9a4b74ed35b0fce, type: 2}
+    - target: {fileID: 4670994006654710812, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: dashForce
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4670994006654710812, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: forceJump
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4670994006654710812, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: dashDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4670994006654710812, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: gravityMultiply
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4670994006654710812, guid: ce93448ffb1ba0d4aab232de70d7e556,
+        type: 3}
+      propertyPath: activedoubleJump
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7363674169355191769, guid: ce93448ffb1ba0d4aab232de70d7e556,
         type: 3}
       propertyPath: m_RootOrder
@@ -12596,6 +12632,7 @@ GameObject:
   - component: {fileID: 1083633016}
   - component: {fileID: 1083633015}
   - component: {fileID: 1083633014}
+  - component: {fileID: 1083633017}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12668,6 +12705,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1083633017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083633013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dcf5c13e478fcb45ad7751851ea8eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerTransform: {fileID: 263671271}
+  SmoothFactor: 0.5
 --- !u!1 &1089520745
 GameObject:
   m_ObjectHideFlags: 0
