@@ -18,7 +18,7 @@ public class PlayerCtrl : MonoBehaviour
     public float dashDuration = 0.2f;
     public RaycastDetection raydect;
     FormCtrl formControl;// actformT; 
-    public bool activedoubleJump, activeDash = true;
+    public bool activedoubleJump, activeDash;
     Character player;
     private int facing;
     void Start()
@@ -105,7 +105,7 @@ public class PlayerCtrl : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         else if (moveH <= -0.1)
             transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
-        Debug.Log(transform.rotation.eulerAngles.y);
+  
         //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
         //que maneje las animaciones del mapa        
         anim.SetFloat("MoveHorizontal", moveH * velocity);    
@@ -137,7 +137,7 @@ public class PlayerCtrl : MonoBehaviour
     void Jump()
     {
 
-        bool detect = this.raydect.ifRaycast();
+        bool detect = this.raydect.ifBoxDetect();
 
         if ((formControl.actformT == FormCtrl.formType.normal))
         {
@@ -155,9 +155,9 @@ public class PlayerCtrl : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
 
-                    float forceJump2 = forceJump + forceJump * 0.1f;
+                    float forceJump2 = forceJump + forceJump * 0.8f;
                     rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
-                    anim.SetBool("DobleJump",true);
+                  //  anim.SetBool("DobleJump",true);
                     //activedoubleJump = false;
                 }
             }
@@ -177,7 +177,7 @@ public class PlayerCtrl : MonoBehaviour
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
-            player.reodenarColor();
+           // player.reodenarColor();
             player.escogerColor();
             //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
         }

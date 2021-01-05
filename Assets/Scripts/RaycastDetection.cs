@@ -6,7 +6,8 @@ public class RaycastDetection : MonoBehaviour
 {
     // Start is called before the first frame update
     public Vector3 offset,offset2,offset3;
-    RaycastHit hit;
+
+    RaycastHit hit,hitC,hitIz,hitDe;
     public float rayDist;
     public float rayDistFront;
     public LayerMask lmask;
@@ -26,8 +27,7 @@ public class RaycastDetection : MonoBehaviour
     public bool ifRaycast()
     {
 
-        Physics.Raycast(transform.position + offset3, -transform.up, out hit, rayDist, lmask);
-
+        Physics.Raycast(transform.position + offset3, -transform.up, out hitC, rayDist, lmask);         
         if (hit.collider != null )
         {       
             return true;
@@ -84,12 +84,13 @@ public class RaycastDetection : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + offset3, -transform.up * rayDist + transform.position + offset3);
+       // Gizmos.color = Color.red;
+       // Gizmos.DrawLine(transform.position + offset3, -transform.up * rayDist + transform.position + offset3);
       //  Gizmos.color = Color.green;
         //Gizmos.DrawLine(transform.position + offset, transform.forward * rayDistFront + transform.position + offset);
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(transform.position+ offset, new Vector3(detectionRadiusX, detectionRadiusY, detectionRadiusZ) * 2f);
+        Gizmos.color = Color.blue;
         Gizmos.DrawSphere(transform.position + offset2, detectRadiusSphere);
     }
 }

@@ -25,16 +25,20 @@ public class Character
     }
     public void almacenarColores(Material mat)
     {
-            if (materiales.Count < 2)
+        if (materiales.Count < 2)
+         //cambiar logica en caso que se quiera n colores 
+        {
+            materiales.Add(mat);
+            if (materiales.Count == 2)
             {
-                materiales.Add(mat);
+                reodenarColor();
             }
-
-            else
-            {
-                materiales[0] = mat;
-            }
-         
+        }
+        else
+        {
+            materiales[0] = mat;
+        }
+       
         
            
     }
@@ -46,16 +50,17 @@ public class Character
             return false;
     }
     public void escogerColor() {
-        character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0]; 
+        if (materiales.Count>0)
+            character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0]; 
+        
     }
     public void  reodenarColor() 
     {
-        //por ahora solo cambia entre 2 colores habria que hacer otra logica si tenemos mas colores 
-        if (materiales.Count == 2) {
-            Material aux = materiales[0];
-            materiales[0] = materiales[1];
-            materiales[1] = aux;
-        }        
+        //por ahora solo cambia entre 2 colores habria que hacer otra logica si tenemos mas colores        
+        Material aux = materiales[0];
+        materiales[0] = materiales[1];
+        materiales[1] = aux;     
+       
     }
     
 }

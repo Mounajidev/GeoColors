@@ -7,16 +7,24 @@ public class LevelMagament : MonoBehaviour
 {
     public GameObject player;
     public GameObject[] casillas;
+    float currentTime, maxTime;
+    public Text c;
     // Start is called before the first frame update
     void Start()
     {
+        maxTime =10;
+        currentTime = maxTime;
         casillas = GameObject.FindGameObjectsWithTag("CasillaDeColor");        
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        currentTime -= Time.deltaTime;
+        c.text= "Tiempo Hasta Despertar:"+Mathf.RoundToInt(currentTime).ToString();
+        if (currentTime <= 0) {
+            currentTime = maxTime;
+        }
     }
     private void FixedUpdate()
     {
@@ -37,6 +45,8 @@ public class LevelMagament : MonoBehaviour
             casilla.gameObject.GetComponent<Collider>().isTrigger = false;
         }
     }
+
+
 }
 
 }
