@@ -7,11 +7,13 @@ public class PlayerCtrl : MonoBehaviour
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     public Rigidbody rb;
     public float moveH;
+    public float moveY;
     Collider[] coll;
     [Header("Configuration")]
     public float velocity = 5f;
     public float velocityEsphere = 5f;
     public float gravityMultiply = 2;
+    public float fallAfterJump = 2f;
     public float forceJump;
     Animator anim;
     public float dashForce = 9f;
@@ -53,7 +55,18 @@ public class PlayerCtrl : MonoBehaviour
     }
     public void Gravity()
     {
+        ////  Opcion 1:  Gravedad todo el tiempo
         rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
+
+        // Opcion 2:  Gravedad agregada solo cuando velocity.y es menor a 0
+        //if (rb.velocity.y < 0)
+        //{
+        //    rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
+        //}
+        if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        {
+            rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
+        }
     }
    
     public void EscogerColor()
@@ -88,8 +101,14 @@ public class PlayerCtrl : MonoBehaviour
     }
     public IEnumerator Invoke()
     {
+        // Dash Opcion 1 ----
+        rb.AddForce(transform.forward * dashForce * facing, ForceMode.VelocityChange);
 
-        rb.AddForce(transform.forward * dashForce*facing, ForceMode.VelocityChange);
+        // Dash Opcion 2 ----
+        //rb.velocity = Vector3.forward * dashForce * facing;
+
+
+
         activeDash = false;
         yield return new WaitForSeconds(dashDuration);
         rb.velocity = Vector3.zero;
@@ -145,8 +164,20 @@ public class PlayerCtrl : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
-                    rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
-                    anim.SetBool("Jump",true);
+
+                    // --------------------     Prueba de Formas de Salto          ---------------------------------
+                    // Opcion1 
+
+                    //rb.AddForce(transform.up * forceJump, ForceMode.Impulse);
+                    //anim.SetBool("Jump",true);
+
+                    // Opcion 2
+                    rb.velocity = Vector2.up * forceJump;
+
+                    anim.SetTrigger("Jump");
+                    anim.SetFloat("VerticalSpeed", rb.velocity.y * velocity);
+
+
 
                 }
             }
@@ -154,10 +185,17 @@ public class PlayerCtrl : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
+                    //  Opcion 1 ----
 
-                    float forceJump2 = forceJump + forceJump * 0.8f;
-                    rb.AddForce(transform.up * forceJump2, ForceMode.Acceleration);
-                  //  anim.SetBool("DobleJump",true);
+                    //float forceJump2 = forceJump + forceJump * 0.8f;
+                    //rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
+
+                    // Opcion 2 ----
+
+                    rb.velocity = Vector2.up * forceJump;
+                    anim.SetTrigger("Jump");
+
+                    //  anim.SetBool("DobleJump",true);
                     //activedoubleJump = false;
                 }
             }
