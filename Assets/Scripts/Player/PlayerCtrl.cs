@@ -156,7 +156,7 @@ public class PlayerCtrl : MonoBehaviour
                 {
 
                     float forceJump2 = forceJump + forceJump * 0.8f;
-                    rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
+                    rb.AddForce(transform.up * forceJump2, ForceMode.Acceleration);
                   //  anim.SetBool("DobleJump",true);
                     //activedoubleJump = false;
                 }
@@ -178,7 +178,12 @@ public class PlayerCtrl : MonoBehaviour
         {
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
            // player.reodenarColor();
+
             player.escogerColor();
+            if (other.gameObject.tag == "Finish")
+            {
+                Destroy(other.gameObject);
+            }
             //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
         }
 

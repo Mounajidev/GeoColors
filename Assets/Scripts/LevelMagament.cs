@@ -12,7 +12,7 @@ public class LevelMagament : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxTime =10;
+        maxTime =480;
         currentTime = maxTime;
         casillas = GameObject.FindGameObjectsWithTag("CasillaDeColor");        
     }
@@ -21,7 +21,7 @@ public class LevelMagament : MonoBehaviour
     void Update()
     {
         currentTime -= Time.deltaTime;
-        c.text= "Tiempo Hasta Despertar:"+Mathf.RoundToInt(currentTime).ToString();
+        c.text = "Tiempo Hasta Despertar:"+Mathf.RoundToInt(currentTime).ToString();
         if (currentTime <= 0) {
             currentTime = maxTime;
         }
