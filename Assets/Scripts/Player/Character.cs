@@ -56,11 +56,14 @@ public class Character
     }
     public void  reodenarColor() 
     {
-        //por ahora solo cambia entre 2 colores habria que hacer otra logica si tenemos mas colores        
-        Material aux = materiales[0];
-        materiales[0] = materiales[1];
-        materiales[1] = aux;     
-       
+        //por ahora solo cambia entre 2 colores habria que hacer otra logica si tenemos mas colores     
+        if (materiales.Count == 2)
+        //cambiar logica en caso que se quiera n colores 
+        {
+            Material aux = materiales[0];
+            materiales[0] = materiales[1];
+            materiales[1] = aux;
+        }
     }
     
 }
