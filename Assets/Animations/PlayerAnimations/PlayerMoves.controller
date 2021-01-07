@@ -147,25 +147,25 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -4664667108259766457}
-    m_Position: {x: 380, y: 20, z: 0}
+    m_Position: {x: 390, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4105382834655887731}
-    m_Position: {x: 380, y: -90, z: 0}
+    m_Position: {x: 390, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4467615494170415986}
-    m_Position: {x: 640, y: -30, z: 0}
+    m_Position: {x: 880, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7141076805862129257}
-    m_Position: {x: 620, y: -180, z: 0}
+    m_Position: {x: 780, y: -180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3528631268626436491}
-    m_Position: {x: 630, y: -110, z: 0}
+    m_Position: {x: 980, y: -150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8101170629732298678}
-    m_Position: {x: 370, y: -210, z: 0}
+    m_Position: {x: 130, y: -260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3664645305748560619}
-    m_Position: {x: 405, y: -145, z: 0}
+    m_Position: {x: -70, y: -170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -440,9 +440,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.5459458
   m_TransitionOffset: 0
-  m_ExitTime: 0.7352941
+  m_ExitTime: 0.18934827
   m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
@@ -458,7 +458,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 348399ee9dc875949a3eaafa20b513ce, type: 2}
-    m_Threshold: -0.5
+    m_Threshold: -8
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -474,7 +474,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: ff1e6e7ddbfaf644db22a210f4837ba2, type: 2}
-    m_Threshold: 0.5
+    m_Threshold: 0.1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -482,9 +482,9 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: VerticalSpeed
   m_BlendParameterY: Blend
-  m_MinThreshold: -0.5
-  m_MaxThreshold: 0.5
-  m_UseAutomaticThresholds: 1
+  m_MinThreshold: -8
+  m_MaxThreshold: 0.1
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1102 &3528631268626436491

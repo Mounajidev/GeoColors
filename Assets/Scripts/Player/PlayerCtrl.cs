@@ -42,6 +42,16 @@ public class PlayerCtrl : MonoBehaviour
         EscogerColor();
         Jump();
         Dash();
+        
+    }
+    private void LateUpdate()
+    {
+        Debug.Log(rb.velocity.y);
+        if(rb.velocity.y>0 )
+        Debug.Log("aciendo");
+        else if(rb.velocity.y < 0 )
+            Debug.Log("deciendo");      
+          anim.SetFloat("VerticalSpeed", rb.velocity.y);
     }
 
 
@@ -59,10 +69,10 @@ public class PlayerCtrl : MonoBehaviour
         rb.AddForce(-transform.up * gravityMultiply, ForceMode.Acceleration);
 
         // Opcion 2:  Gravedad agregada solo cuando velocity.y es menor a 0
-        //if (rb.velocity.y < 0)
-        //{
-        //    rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
-        //}
+        /*if (rb.velocity.y < 0)
+        {
+            rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
+        }*/
         if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
         {
             rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
@@ -120,10 +130,10 @@ public class PlayerCtrl : MonoBehaviour
         moveH = Input.GetAxis("Horizontal");
         //if (formControl.actformT == FormCtrl.formType.normal)
         //{ 
-       /* if (moveH >= 0.1)
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        else if (moveH <= -0.1)
-            transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
+           /* if (moveH >= 0.1)
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            else if (moveH <= -0.1)
+                transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
   
         //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
         //que maneje las animaciones del mapa        
@@ -172,12 +182,9 @@ public class PlayerCtrl : MonoBehaviour
                     //anim.SetBool("Jump",true);
 
                     // Opcion 2
-                    rb.velocity = Vector2.up * forceJump;
-
+                    rb.velocity = Vector3.up * forceJump ;
                     anim.SetTrigger("Jump");
-                    anim.SetFloat("VerticalSpeed", rb.velocity.y * velocity);
-
-
+                    
 
                 }
             }
@@ -201,7 +208,7 @@ public class PlayerCtrl : MonoBehaviour
             }
 
         }
-
+        
 
     }
 
