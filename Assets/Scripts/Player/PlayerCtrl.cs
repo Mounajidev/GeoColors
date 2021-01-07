@@ -182,8 +182,18 @@ public class PlayerCtrl : MonoBehaviour
                     //anim.SetBool("Jump",true);
 
                     // Opcion 2
+<<<<<<< Updated upstream
                     rb.velocity = Vector3.up * forceJump ;
                     anim.SetTrigger("Jump");                   
+=======
+                    rb.velocity = Vector2.up * forceJump;
+
+                    anim.SetTrigger("Jump");
+                    anim.SetFloat("VerticalSpeed", rb.velocity.y);
+
+
+
+>>>>>>> Stashed changes
                 }
             }
             else if (!detect && activedoubleJump)
