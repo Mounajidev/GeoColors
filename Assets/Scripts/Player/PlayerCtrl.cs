@@ -77,6 +77,10 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
         }
+        else if (rb.velocity.y == 0f)
+        {
+            activedoubleJump = true;
+        }
     }
    
     public void EscogerColor()
@@ -172,6 +176,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (detect)
             {
+                
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
 
@@ -182,18 +187,21 @@ public class PlayerCtrl : MonoBehaviour
                     //anim.SetBool("Jump",true);
 
                     // Opcion 2
-<<<<<<< Updated upstream
+ //Updated upstream
                     rb.velocity = Vector3.up * forceJump ;
-                    anim.SetTrigger("Jump");                   
-=======
-                    rb.velocity = Vector2.up * forceJump;
+                    anim.SetTrigger("Jump");                  
+                    //rb.velocity = Vector2.up * forceJump;
 
-                    anim.SetTrigger("Jump");
+                    //anim.SetTrigger("Jump");
                     anim.SetFloat("VerticalSpeed", rb.velocity.y);
 
 
 
->>>>>>> Stashed changes
+ //Stashed changes
+                }
+                else
+                {
+                    anim.SetBool("CollisionWithWall", true);
                 }
             }
             else if (!detect && activedoubleJump)
@@ -210,8 +218,9 @@ public class PlayerCtrl : MonoBehaviour
                     rb.velocity = Vector2.up * forceJump;
                     anim.SetTrigger("Jump");
 
+
                     //  anim.SetBool("DobleJump",true);
-                    //activedoubleJump = false;
+                    activedoubleJump = false;
                 }
             }
 
@@ -219,6 +228,16 @@ public class PlayerCtrl : MonoBehaviour
         
 
     }
+    public void OnCollisionEnter(Collision collision)
+    {
+        bool detect = this.raydect.ifBoxDetect();
+        if (!detect)
+        {
+            anim.SetBool("CollisionWithWall", false);
+        }
+    }
+
+
 
     public void OnTriggerEnter(Collider other)
     {

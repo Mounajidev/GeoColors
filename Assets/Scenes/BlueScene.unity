@@ -4413,7 +4413,7 @@ GameObject:
   - component: {fileID: 159396557}
   m_Layer: 8
   m_Name: Cube (696)
-  m_TagString: Casilla
+  m_TagString: CasillaDeColor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27413,7 +27413,7 @@ GameObject:
   - component: {fileID: 867670828}
   m_Layer: 8
   m_Name: Cube (695)
-  m_TagString: Casilla
+  m_TagString: CasillaDeColor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47781,7 +47781,7 @@ GameObject:
   - component: {fileID: 1537511104}
   m_Layer: 8
   m_Name: Cube (697)
-  m_TagString: Casilla
+  m_TagString: CasillaDeColor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53553,7 +53553,7 @@ GameObject:
   - component: {fileID: 1737753101}
   m_Layer: 8
   m_Name: Cube (694)
-  m_TagString: Casilla
+  m_TagString: CasillaDeColor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
