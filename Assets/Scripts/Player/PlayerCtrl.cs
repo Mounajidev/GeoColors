@@ -110,6 +110,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             StartCoroutine(Invoke());
             anim.SetBool("Dash", true);
+            SoundManager.PlaySound("Dash");
         }
 
     }
@@ -188,8 +189,10 @@ public class PlayerCtrl : MonoBehaviour
 
                     // Opcion 2
  //Updated upstream
+
                     rb.velocity = Vector3.up * forceJump ;
-                    anim.SetTrigger("Jump");                  
+                    anim.SetTrigger("Jump");
+                    SoundManager.PlaySound("Jump");
                     //rb.velocity = Vector2.up * forceJump;
 
                     //anim.SetTrigger("Jump");
@@ -199,10 +202,7 @@ public class PlayerCtrl : MonoBehaviour
 
  //Stashed changes
                 }
-                else
-                {
-                    anim.SetBool("CollisionWithWall", true);
-                }
+              
             }
             else if (!detect && activedoubleJump)
             {
@@ -217,6 +217,7 @@ public class PlayerCtrl : MonoBehaviour
 
                     rb.velocity = Vector2.up * forceJump;
                     anim.SetTrigger("Jump");
+                    SoundManager.PlaySound("Jump");
 
 
                     //  anim.SetBool("DobleJump",true);
@@ -230,10 +231,17 @@ public class PlayerCtrl : MonoBehaviour
     }
     public void OnCollisionEnter(Collision collision)
     {
+        rb = GetComponent<Rigidbody>();
         bool detect = this.raydect.ifBoxDetect();
-        if (!detect)
+        if (detect)
         {
             anim.SetBool("CollisionWithWall", false);
+            Debug.Log("Wall off");
+        }
+        else
+        {
+            anim.SetBool("CollisionWithWall", true);
+            Debug.Log("Wall on");
         }
     }
 
