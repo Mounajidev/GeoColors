@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
         switch (clip)
         {
             case "Jump":
-         //       audioSrc.PlayOneShot(playerJump);
+              //  audioSrc.PlayOneShot(playerJump);
                 break;
             case "Dash":
                // audioSrc.PlayOneShot(playerDash);

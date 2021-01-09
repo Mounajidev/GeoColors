@@ -227,6 +227,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (!activeClimb)
         {
+            timeClimbing = maxtimeClimbing;
             moveH = Input.GetAxis("Horizontal");
             //if (formControl.actformT == FormCtrl.formType.normal)
             //{ 
