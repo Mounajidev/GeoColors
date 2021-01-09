@@ -168,9 +168,15 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
         }*/
-        if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
+        if (rb.velocity.y > 0f && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
         {
-            rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
+            // Opcopn 1 -- la que usamos por el momento -----
+            rb.AddForce(-transform.up * gravityMultiply * fallAfterJump, ForceMode.Acceleration);
+            //rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
+
+            // opcion 2 ---
+
+
         }
         else if (rb.velocity.y == 0f)
         {
@@ -219,7 +225,7 @@ public class PlayerCtrl : MonoBehaviour
         //rb.velocity = Vector3.forward * dashForce * facing;
 
         // Dash Opcion 3 ---
-        rb.velocity = Vector3.forward * dashForce;
+        rb.velocity = Vector3.forward * dashForce * facing;
 
 
 
@@ -297,6 +303,9 @@ public class PlayerCtrl : MonoBehaviour
                     rb.velocity = Vector3.up * forceJump ;
                     anim.SetTrigger("Jump");
                     SoundManager.PlaySound("Jump");
+
+                    
+                        
                     //rb.velocity = Vector2.up * forceJump;
 
                     //anim.SetTrigger("Jump");
@@ -306,7 +315,7 @@ public class PlayerCtrl : MonoBehaviour
             }
             else if (!detect && activedoubleJump && !activeClimb)
             {
-                if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
+                if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.Joystick1Button0)))//cambiar el input
                 {
                     //  Opcion 1 ----
 
