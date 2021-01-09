@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
+    public float forceJumpImpulse;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     public Rigidbody rb;
     public float moveH;
@@ -167,7 +168,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
         }*/
-        if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
         {
             rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
         }
@@ -179,6 +180,7 @@ public class PlayerCtrl : MonoBehaviour
    
     public void EscogerColor()
     {
+        
         coll = raydect.RetCollBoxDectected();
         bool chocar = false;
         foreach (Collider c in coll)
@@ -189,7 +191,7 @@ public class PlayerCtrl : MonoBehaviour
                 break;
             }
         }
-        if (Input.GetKeyDown(KeyCode.W) && !chocar && player.tengoColor())
+        if (Input.GetKeyDown(KeyCode.W) || (Input.GetAxis("JoystickUp") > 0 && !chocar && player.tengoColor()))
         {
             player.reodenarColor();
             player.escogerColor();
@@ -211,10 +213,13 @@ public class PlayerCtrl : MonoBehaviour
     public IEnumerator Invoke()
     {
         // Dash Opcion 1 ----
-        rb.AddForce(transform.forward * dashForce * facing, ForceMode.VelocityChange);
+        //rb.AddForce(transform.forward * dashForce * facing, ForceMode.VelocityChange);
 
         // Dash Opcion 2 ----
         //rb.velocity = Vector3.forward * dashForce * facing;
+
+        // Dash Opcion 3 ---
+        rb.velocity = Vector3.forward * dashForce;
 
 
 
@@ -276,8 +281,8 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (detect)
             {
-                
-                if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
+
+                if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.Joystick1Button0))) //|| (Input.GetButtonDown("Joystick1Button0")))*/ //cambiar el input
                 {
 
                     // --------------------     Prueba de Formas de Salto          ---------------------------------
