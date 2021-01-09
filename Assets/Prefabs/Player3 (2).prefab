@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 255719314257764645}
   m_LocalRotation: {x: 0.7685754, y: -0.31008592, z: -0.426882, w: 0.36181542}
-  m_LocalPosition: {x: -0.36, y: -0.32, z: 0.2}
-  m_LocalScale: {x: 0.18709116, y: 0.18709113, z: 0.18709116}
+  m_LocalPosition: {x: -0.34, y: -0.25, z: 0.09}
+  m_LocalScale: {x: 0.1870912, y: 0.18709113, z: 0.1870912}
   m_Children: []
   m_Father: {fileID: 869351847241324064}
   m_RootOrder: 2
@@ -385,7 +385,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869351847241324124}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 0.55, z: -0.1}
+  m_LocalPosition: {x: 0.11, y: 0.433, z: -0.050002173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 255719314346061786}
@@ -547,7 +547,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869351848493279856}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: -0.471, z: -0.101}
+  m_LocalPosition: {x: 0.11, y: -0.58799785, z: -0.051002175}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 869351848657086759}
@@ -580,7 +580,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869351848657086758}
   m_LocalRotation: {x: -0.040772673, y: -0.71718097, z: 0.07212341, w: 0.69194454}
-  m_LocalPosition: {x: 0.01, y: 1.24, z: -0.09}
+  m_LocalPosition: {x: 0, y: 1.23, z: -0.18}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 869351848493279858}
@@ -661,7 +661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5435071035604275721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: -0.88, z: 0.09}
+  m_LocalPosition: {x: 0.11, y: -0.9969987, z: 0.14}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 7363674169355191769}
@@ -701,7 +701,7 @@ Transform:
   m_GameObject: {fileID: 7363674169692796922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.0692143, y: 0.9497091, z: -2.8031576}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6769092, y: 0.6769092, z: 0.6769092}
   m_Children:
   - {fileID: 869351847241324064}
   - {fileID: 869351848493279858}
@@ -736,7 +736,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &618527664580186526
@@ -749,10 +749,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5645827
-  m_Height: 1.8356919
+  m_Radius: 0.37564027
+  m_Height: 1.83
   m_Direction: 1
-  m_Center: {x: 0, y: 0.19329238, z: -0.14654624}
+  m_Center: {x: 0, y: 0.19329236, z: -0.079254344}
 --- !u!135 &2541316218575149712
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -780,11 +780,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   moveH: 0
+  moveY: 0
   velocity: 5
   velocityEsphere: 5
-  gravityMultiply: 4
-  forceJump: 8
+  gravityMultiply: 15
+  fallAfterJump: 2
+  forceJump: 11
+  dashForce: 18
+  dashDuration: 3
   raydect: {fileID: 0}
+  activedoubleJump: 1
+  activeDash: 1
+  timeClimbing: 0
+  timefalling: 0
+  maxtimeClimbing: 1
+  maxtimeFalling: 1
 --- !u!114 &1155779910218407691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,20 +821,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d4574448101f64bb3ef05d2b7de473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0.11, z: 0}
-  offset2: {x: 0, y: -0.44, z: 0}
-  rayDist: 1.37
-  rayDistFront: 0
+  offset: {x: -0.03, y: -0.51, z: 0.19}
+  offsetEsfera: {x: 0, y: 0, z: 0}
+  offset3: {x: 0, y: 0, z: 0}
+  frontOffset: {x: 0, y: -0.34, z: 0}
+  upOffset: {x: 0, y: 0, z: 0}
+  behinfOffset: {x: 0, y: -0.34, z: 0}
+  rayDistFront: 0.38
+  rayDistBehind: 0.38
+  rayDistTop: 1
   lmask:
     serializedVersion: 2
     m_Bits: 9984
   lmask2:
     serializedVersion: 2
     m_Bits: 8192
-  detectionRadiusX: 0.53
-  detectionRadiusY: 0.86
-  detectionRadiusZ: 0.52
-  detectRadiusSphere: 0.52
+  maskClimb:
+    serializedVersion: 2
+    m_Bits: 8960
+  detectionRadiusX: 0.16
+  detectionRadiusY: 0.06
+  detectionRadiusZ: 0.13
+  detectRadiusSphere: 0
 --- !u!114 &5568057400757995575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +865,7 @@ Animator:
   m_GameObject: {fileID: 7363674169692796922}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f49f11950f4f56c4e963e56d250f59f2, type: 2}
+  m_Controller: {fileID: 9100000, guid: d2321abc4ef9c514f9a4b74ed35b0fce, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -881,7 +899,7 @@ PrefabInstance:
     - target: {fileID: 615496388637984273, guid: 0cc66c9524d26064e9e6e49bddd55eff,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.167
+      value: 0.49699867
       objectReference: {fileID: 0}
     - target: {fileID: 615496388637984273, guid: 0cc66c9524d26064e9e6e49bddd55eff,
         type: 3}

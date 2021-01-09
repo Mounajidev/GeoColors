@@ -13,6 +13,7 @@ public class PlayerCtrl : MonoBehaviour
     public float velocity = 5f;
     public float velocityEsphere = 5f;
     public float gravityMultiply = 2;
+    float gravityMultiplyAux;
     public float fallAfterJump = 2f;
     public float forceJump;
     Animator anim;
@@ -23,6 +24,12 @@ public class PlayerCtrl : MonoBehaviour
     public bool activedoubleJump, activeDash;
     Character player;
     private int facing;
+    [Header("Configuration for Climbing")]
+    bool activeClimb;
+    public float timeClimbing,timefalling;
+    public float maxtimeClimbing,maxtimeFalling;
+    bool falling;
+    float auxV;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -30,8 +37,12 @@ public class PlayerCtrl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
- 
-
+        activeClimb = false;
+        //gravityMultiplyAux = gravityMultiply;
+         timeClimbing= maxtimeClimbing;
+        timefalling = maxtimeFalling;
+       falling = false;
+        auxV = velocity;
     }
     ///Hojo hay que cambiar todos los imput para que funcione en android por ahora esta todo como si fuera un teclado
     ///normal 
@@ -42,7 +53,78 @@ public class PlayerCtrl : MonoBehaviour
         EscogerColor();
         Jump();
         Dash();
+        Climb();
+
+
+    }
+    public void Climb() {
         
+        if (!falling)
+            activeClimb = (raydect.ifRaycast(m_FacingRight,this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial));
+        else
+            activeClimb = false;
+       // Debug.Log(activeClimb);
+         if (activeClimb)
+         {
+            transform.GetComponent<CapsuleCollider>().height = 1f;
+            //rb.useGravity = false;
+            //gravityMultiply = 0;
+            rb.isKinematic = true;
+            moveH = Input.GetAxis("Horizontal");
+            //Debug.Log("entro");
+            
+            float new_velocity =3f;
+            Vector3 move = new Vector3(0f, new_velocity * Mathf.Abs(moveH) * Time.deltaTime,0);
+            rb.MovePosition(transform.position + move);
+            if (moveH > 0 && !m_FacingRight)
+            {
+                // gravityMultiply = gravityMultiplyAux; 
+                // rb.useGravity = true;
+                // activeClimb = false;
+                rb.isKinematic = false;
+                timeClimbing = maxtimeClimbing;
+                Flip();
+                 
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (moveH < 0 && m_FacingRight)
+            {
+                // ... flip the player.
+                // gravityMultiply = gravityMultiplyAux;
+                //rb.useGravity = true;
+                timeClimbing = maxtimeClimbing;
+                activeClimb = false;
+                Flip();
+            }
+            timeClimbing -= Time.deltaTime;
+            if (timeClimbing <= 0 ||(timeClimbing > 0 && raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial)))
+            {
+                falling = true;
+                activeClimb = false;
+                rb.isKinematic = false;
+            }         
+        }
+        else
+        {
+            rb.isKinematic = false;
+            if(!falling)
+                timefalling = maxtimeFalling;
+            else
+            {
+                velocity = 0;
+                timefalling -= Time.deltaTime;
+            }
+                
+            if (timefalling <= 0)
+            {
+                falling = false;
+                velocity = auxV;
+                timeClimbing = maxtimeClimbing;
+            }
+            //  rb.useGravity = true;
+            //gravityMultiply = gravityMultiplyAux;
+             transform.GetComponent<CapsuleCollider>().height = 1.83f;
+        }
     }
     private void LateUpdate()
     {
@@ -51,14 +133,26 @@ public class PlayerCtrl : MonoBehaviour
       //  Debug.Log("aciendo");
       //  else if(rb.velocity.y < 0 )
       //      Debug.Log("deciendo");      
-          anim.SetFloat("VerticalSpeed", rb.velocity.y);
+        anim.SetFloat("VerticalSpeed", rb.velocity.y);
+       
+        climbAnimation();
     }
-
+    private void climbAnimation() {
+        if (activeClimb)
+        {
+            anim.SetBool("CollisionWithWall", true);
+        }
+        else
+        {
+            anim.SetBool("CollisionWithWall", false);
+        }
+    }
 
     private void FixedUpdate()
     {
         
         Move();
+        Climb();
         Gravity();
 
 
@@ -131,42 +225,46 @@ public class PlayerCtrl : MonoBehaviour
     }
     void Move()
     {
- 
-        moveH = Input.GetAxis("Horizontal");
-        //if (formControl.actformT == FormCtrl.formType.normal)
-        //{ 
-           /* if (moveH >= 0.1)
-                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            else if (moveH <= -0.1)
-                transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
-  
-        //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
-        //que maneje las animaciones del mapa        
-        anim.SetFloat("MoveHorizontal", moveH * velocity);    
-        Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);       
-        rb.MovePosition(transform.position + move);
-
-        // If the input is moving the player right and the player is facing left...
-        if (moveH > 0 && !m_FacingRight)
+        if (!activeClimb)
         {
-            // ... flip the player.
-            Flip();
-        }
-        // Otherwise if the input is moving the player left and the player is facing right...
-        else if (moveH < 0 && m_FacingRight)
-        {
-            // ... flip the player.
-            Flip();
+            moveH = Input.GetAxis("Horizontal");
+            //if (formControl.actformT == FormCtrl.formType.normal)
+            //{ 
+            /* if (moveH >= 0.1)
+                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+             else if (moveH <= -0.1)
+                 transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
+
+            //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
+            //que maneje las animaciones del mapa      
+            if (moveH > 0 && !m_FacingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (moveH < 0 && m_FacingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+            anim.SetFloat("MoveHorizontal", moveH * velocity);
+            Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
+            rb.MovePosition(transform.position + move);
+
+            // If the input is moving the player right and the player is facing left...
+
+
+
+            //}
+            //else if (formControl.actformT == FormCtrl.formType.sphere)
+            //{
+            //    rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
+            //    rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
+            //    rb.AddTorque(transform.right * moveH * velocityEsphere);
+            //}
         }
 
-         
-        //}
-        //else if (formControl.actformT == FormCtrl.formType.sphere)
-        //{
-        //    rb.AddForce(new Vector3(0f, 0f, moveH) * velocityEsphere);
-        //    rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
-        //    rb.AddTorque(transform.right * moveH * velocityEsphere);
-        //}
     }
     void Jump()
     {
@@ -196,15 +294,11 @@ public class PlayerCtrl : MonoBehaviour
                     //rb.velocity = Vector2.up * forceJump;
 
                     //anim.SetTrigger("Jump");
-                    anim.SetFloat("VerticalSpeed", rb.velocity.y);
-
-
-
- //Stashed changes
+                    anim.SetFloat("VerticalSpeed", rb.velocity.y);               
                 }
               
             }
-            else if (!detect && activedoubleJump)
+            else if (!detect && activedoubleJump && !activeClimb)
             {
                 if (Input.GetKeyDown(KeyCode.Space))//cambiar el input
                 {
@@ -219,7 +313,6 @@ public class PlayerCtrl : MonoBehaviour
                     anim.SetTrigger("Jump");
                     SoundManager.PlaySound("Jump");
 
-
                     //  anim.SetBool("DobleJump",true);
                     activedoubleJump = false;
                 }
@@ -229,9 +322,9 @@ public class PlayerCtrl : MonoBehaviour
         
 
     }
-    public void OnCollisionEnter(Collision collision)
+   /* public void OnCollisionEnter(Collision collision)
     {
-        rb = GetComponent<Rigidbody>();
+         rb = GetComponent<Rigidbody>();
         bool detect = this.raydect.ifBoxDetect();
         if (detect)
         {
@@ -243,7 +336,8 @@ public class PlayerCtrl : MonoBehaviour
             anim.SetBool("CollisionWithWall", true);
             Debug.Log("Wall on");
         }
-    }
+        
+    }*/
 
 
 
@@ -273,13 +367,22 @@ public class PlayerCtrl : MonoBehaviour
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
         if (m_FacingRight)
+        {
             facing = 1;
+            this.GetComponent<RaycastDetection>().offset.z = -0.07f;//arregla el bug que cuando reescalo cambia el centro
+        }
+
         else
+        {
             facing = -1;
+            this.GetComponent<RaycastDetection>().offset.z = 0.06f;
+        }
+            
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
         theScale.z *= -1;
         transform.localScale = theScale;
+         
     }
 
    

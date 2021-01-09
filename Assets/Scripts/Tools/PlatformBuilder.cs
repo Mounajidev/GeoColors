@@ -38,14 +38,6 @@ public class PlatformBuilder : MonoBehaviour
 
     Rigidbody rbPlatform;
 
-   
-
-  
-
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {
