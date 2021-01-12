@@ -58,7 +58,7 @@ public class RaycastDetection : MonoBehaviour
         
         if (hitFront.collider != null && mat.color != hitFront.collider.GetComponent<Renderer>().sharedMaterial.color)
         {
-            Debug.Log("hit");
+           // Debug.Log("hit");
             return true;
         }
         else

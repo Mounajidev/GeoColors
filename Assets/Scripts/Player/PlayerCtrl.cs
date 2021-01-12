@@ -23,7 +23,7 @@ public class PlayerCtrl : MonoBehaviour
     public RaycastDetection raydect;
     FormCtrl formControl;// actformT; 
     public bool activedoubleJump, activeDash;
-    Character player;
+    public Character player;
     private int facing;
     [Header("Configuration for Climbing")]
     bool activeClimb;
@@ -31,6 +31,8 @@ public class PlayerCtrl : MonoBehaviour
     public float maxtimeClimbing,maxtimeFalling;
     bool falling;
     float auxV;
+    [Header("Configuration for Item")]
+     public InventoryManager invM;
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -201,6 +203,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             player.reodenarColor();
             player.escogerColor();
+            invM.addItem(player.materiales);
             chocar = false;
         }
  
@@ -365,10 +368,9 @@ public class PlayerCtrl : MonoBehaviour
         bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
-            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
-           // player.reodenarColor();
-
+            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial) ;
             player.escogerColor();
+            invM.addItem(player.materiales);
             if (other.gameObject.tag == "Finish")
             {
                 Destroy(other.gameObject);

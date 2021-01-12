@@ -5,11 +5,8 @@ using UnityEngine;
 public class Character
 {
     GameObject character;
-    float hp;
-    float velocity;
     //Material materialActual; esta variable puede servir si quiero mas de 2 colores
-    List<Material> materiales;
-    
+    public List<Material> materiales;
     public Character(GameObject charac) {
         this.character = charac;
         materiales = new List<Material>();
@@ -17,7 +14,6 @@ public class Character
     }
     public bool existeColor(Material mat)
     {
-
         return materiales.Exists(x => x == mat);
     }
     public Material obtenermaterialActual() {
@@ -38,9 +34,7 @@ public class Character
         {
             materiales[0] = mat;
         }
-       
         
-           
     }
     public bool tengoColor()
     {
@@ -51,8 +45,7 @@ public class Character
     }
     public void escogerColor() {
         if (materiales.Count>0)
-            character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0]; 
-        
+            character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0];         
     }
     public void  reodenarColor() 
     {
