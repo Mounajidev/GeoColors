@@ -38,6 +38,7 @@ public class LevelMagament : MonoBehaviour
     {
         if (player.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.color == casilla.gameObject.GetComponent<Renderer>().sharedMaterial.color)
         {
+                Debug.Log("Same Color!");
             casilla.gameObject.GetComponent<Collider>().isTrigger = true;
         }
         else

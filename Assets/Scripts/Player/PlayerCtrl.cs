@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    public float forceJumpImpulse;
+
+    public bool lateralDetect = true;
+    public float forceJumpImpulse = 0.2f;
+    public bool isGrounded;
+    public Vector3 moveDirection;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     public Rigidbody rb;
     public float moveH;
     public float moveY;
+    public float climbingMove = 10f;
     Collider[] coll;
     [Header("Configuration")]
     public float velocity = 5f;
@@ -26,15 +31,16 @@ public class PlayerCtrl : MonoBehaviour
     public Character player;
     private int facing;
     [Header("Configuration for Climbing")]
-    bool activeClimb;
-    public float timeClimbing,timefalling;
-    public float maxtimeClimbing,maxtimeFalling;
+    public bool activeClimb;
+    public float timeClimbing, timefalling;
+    public float maxtimeClimbing, maxtimeFalling;
     bool falling;
     float auxV;
     [Header("Configuration for Item")]
      public InventoryManager invM;
     void Start()
     {
+        
         anim = GetComponent<Animator>();
         player = new Character(this.gameObject);
         rb = GetComponent<Rigidbody>();
@@ -42,9 +48,9 @@ public class PlayerCtrl : MonoBehaviour
         raydect = GetComponent<RaycastDetection>();
         activeClimb = false;
         //gravityMultiplyAux = gravityMultiply;
-         timeClimbing= maxtimeClimbing;
+        timeClimbing = maxtimeClimbing;
         timefalling = maxtimeFalling;
-       falling = false;
+        falling = false;
         auxV = velocity;
     }
     ///Hojo hay que cambiar todos los imput para que funcione en android por ahora esta todo como si fuera un teclado
@@ -52,7 +58,7 @@ public class PlayerCtrl : MonoBehaviour
     ///
     // Update is called once per frame
     void Update()
-    {      
+    {
         EscogerColor();
         Jump();
         Dash();
@@ -60,96 +66,221 @@ public class PlayerCtrl : MonoBehaviour
 
 
     }
-    public void Climb() {
-        
-        if (!falling)
-            activeClimb = (raydect.ifRaycast(m_FacingRight,this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial));
-        else
-            activeClimb = false;
-       // Debug.Log(activeClimb);
-         if (activeClimb)
-         {
-            transform.GetComponent<CapsuleCollider>().height = 1f;
-            //rb.useGravity = false;
-            //gravityMultiply = 0;
-            rb.isKinematic = true;
-            moveH = Input.GetAxis("Horizontal");
-            //Debug.Log("entro");
-            
-            float new_velocity =3f;
-            Vector3 move = new Vector3(0f, new_velocity * Mathf.Abs(moveH) * Time.deltaTime,0);
-            rb.MovePosition(transform.position + move);
-            if (moveH > 0 && !m_FacingRight)
-            {
-                // gravityMultiply = gravityMultiplyAux; 
-                // rb.useGravity = true;
-                // activeClimb = false;
-                rb.isKinematic = false;
-                timeClimbing = maxtimeClimbing;
-                Flip();
-                 
-            }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (moveH < 0 && m_FacingRight)
-            {
-                // ... flip the player.
-                // gravityMultiply = gravityMultiplyAux;
-                //rb.useGravity = true;
-                timeClimbing = maxtimeClimbing;
-                activeClimb = false;
-                Flip();
-            }
-            timeClimbing -= Time.deltaTime;
-            if (timeClimbing <= 0 ||(timeClimbing > 0 && raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial)))
-            {
-                falling = true;
-                activeClimb = false;
-                rb.isKinematic = false;
-            }         
-        }
-        else
-        {
-            rb.isKinematic = false;
-            if(!falling)
-                timefalling = maxtimeFalling;
-            else
-            {
-                velocity = 0;
-                timefalling -= Time.deltaTime;
-            }
-                
-            if (timefalling <= 0)
-            {
-                falling = false;
-                velocity = auxV;
-                timeClimbing = maxtimeClimbing;
-            }
-            //  rb.useGravity = true;
-            //gravityMultiply = gravityMultiplyAux;
-             transform.GetComponent<CapsuleCollider>().height = 1.83f;
-        }
-    }
-    private void LateUpdate()
+
+    // Opcion 1  -   Climb Con Raycast ( el que estaba )
+    //-------------------------------------------------------------------------------------
+
+
+    //public void Climb() {
+
+    //    if (!falling)
+    //        activeClimb = (raydect.ifRaycast(m_FacingRight,this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial));
+    //    else
+    //        activeClimb = false;
+    //   // Debug.Log(activeClimb);
+    //     if (activeClimb)
+    //     {
+    //        transform.GetComponent<CapsuleCollider>().height = 1f;
+    //        //rb.useGravity = false;
+    //        //gravityMultiply = 0;
+    //        rb.isKinematic = true;
+    //        moveH = Input.GetAxis("Horizontal");
+    //        //Debug.Log("entro");
+
+    //        float new_velocity =3f;
+    //        Vector3 move = new Vector3(0f, new_velocity * Mathf.Abs(moveH) * Time.deltaTime,0);
+    //        rb.MovePosition(transform.position + move);
+    //        if (moveH > 0 && !m_FacingRight)
+    //        {
+    //            // gravityMultiply = gravityMultiplyAux; 
+    //            // rb.useGravity = true;
+    //            // activeClimb = false;
+    //            rb.isKinematic = false;
+    //            timeClimbing = maxtimeClimbing;
+    //            Flip();
+
+    //        }
+    //        // Otherwise if the input is moving the player left and the player is facing right...
+    //        else if (moveH < 0 && m_FacingRight)
+    //        {
+    //            // ... flip the player.
+    //            // gravityMultiply = gravityMultiplyAux;
+    //            //rb.useGravity = true;
+    //            timeClimbing = maxtimeClimbing;
+    //            activeClimb = false;
+    //            Flip();
+    //        }
+    //        timeClimbing -= Time.deltaTime;
+    //        if (timeClimbing <= 0 ||(timeClimbing > 0 && raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial)))
+    //        {
+    //            falling = true;
+    //            activeClimb = false;
+    //            rb.isKinematic = false;
+    //        }         
+    //    }
+    //    else
+    //    {
+    //        rb.isKinematic = false;
+    //        if(!falling)
+    //            timefalling = maxtimeFalling;
+    //        else
+    //        {
+    //            velocity = 0;
+    //            timefalling -= Time.deltaTime;
+    //        }
+
+    //        if (timefalling <= 0)
+    //        {
+    //            falling = false;
+    //            velocity = auxV;
+    //            timeClimbing = maxtimeClimbing;
+    //        }
+    //        //  rb.useGravity = true;
+    //        //gravityMultiply = gravityMultiplyAux;
+    //         transform.GetComponent<CapsuleCollider>().height = 1.83f;
+    //    }
+    //}
+    //private void LateUpdate()
+    //{
+    //   // Debug.Log(rb.velocity.y);
+    //   // if(rb.velocity.y>0 )
+    //  //  Debug.Log("aciendo");
+    //  //  else if(rb.velocity.y < 0 )
+    //  //      Debug.Log("deciendo");      
+    //    anim.SetFloat("VerticalSpeed", rb.velocity.y);
+
+    //    climbAnimation();
+    //}
+    //private void climbAnimation() {
+    //    if (activeClimb)
+    //    {
+    //        anim.SetBool("CollisionWithWall", true);
+    //    }
+    //    else
+    //    {
+    //        anim.SetBool("CollisionWithWall", false);
+    //    }
+    //}
+
+    // ---------------------------------------------------------------------------------------------------------
+
+    // Opcion 2  Climb con enter Collider ---------------------------------------------
+    //---------------------------------------------------------------
+    public void OnCollisionEnter(Collision collision)
     {
-       // Debug.Log(rb.velocity.y);
-       // if(rb.velocity.y>0 )
-      //  Debug.Log("aciendo");
-      //  else if(rb.velocity.y < 0 )
-      //      Debug.Log("deciendo");      
-        anim.SetFloat("VerticalSpeed", rb.velocity.y);
-       
-        climbAnimation();
-    }
-    private void climbAnimation() {
-        if (activeClimb)
+        
+        bool detect = this.raydect.ifBoxDetect();
+        isGrounded = true;
+
+        if (detect)
         {
-            anim.SetBool("CollisionWithWall", true);
-        }
-        else
-        {
+
+
+            //rb.isKinematic = false;
             anim.SetBool("CollisionWithWall", false);
+            Debug.Log("Wall off");
+
+        }
+        else if ( !raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial))
+        {
+            Debug.Log("Collision Wall");
+            activeClimb = true;
+            anim.SetBool("CollisionWithWall", true);
+
+        }
+
+    }
+    public void OnCollisionStay(Collision collision)
+    {
+        lateralDetect = raydect.ifRaycastLateral(m_FacingRight);
+        bool detect = this.raydect.ifBoxDetect();
+        if (!detect && lateralDetect)
+        {
+            moveH = Input.GetAxis("Horizontal");
+
+            rb.velocity = Vector3.up * moveH * climbingMove * facing;
+            //   //Vector3 move = new Vector3(0f, velocity * moveY * Time.deltaTime, 0f);
+            //Vector3 moveDirection = new Vector3(0f, velocity * Mathf.Abs(moveH) * Time.deltaTime, 0);
+            //moveDirection.y = moveH * Time.deltaTime;
+            //rb.MovePosition(transform.position.y * moveDirection);
+            Debug.Log("Collision Stay");
+
         }
     }
+    public void OnCollisionExit(Collision collision)
+    {
+        
+        isGrounded = false;
+        //debug.log("collision exit");
+    }
+    //public void Climb()
+    //{
+    //    if (activeClimb)
+    //    {
+    //        transform.GetComponent<CapsuleCollider>().height = 1f;
+    //        //        //rb.useGravity = false;
+    //        //        //gravityMultiply = 0;
+    //        //rb.isKinematic = true;
+    //        moveH = Input.GetAxis("Horizontal");
+    //        //        //Debug.Log("entro");
+
+    //        float new_velocity = 3f;
+    //        Vector3 move = new Vector3(0f, new_velocity * Mathf.Abs(moveH) * Time.deltaTime, 0);
+    //        rb.MovePosition(transform.position + move);
+    //        if (moveH > 0 && !m_FacingRight)
+    //        {
+    //            // gravityMultiply = gravityMultiplyAux; 
+    //            // rb.useGravity = true;
+    //            // activeClimb = false;
+    //            //rb.isKinematic = false;
+    //            //timeClimbing = maxtimeClimbing;
+    //            Flip();
+
+    //        }
+    //        //        // Otherwise if the input is moving the player left and the player is facing right...
+    //        else if (moveH < 0 && m_FacingRight)
+    //        {
+    //            //            // ... flip the player.
+    //            //            // gravityMultiply = gravityMultiplyAux;
+    //            //            //rb.useGravity = true;
+    //            //timeClimbing = maxtimeClimbing;
+    //            //activeClimb = false;
+    //            Flip();
+    //        }
+    //    timeClimbing -= Time.deltaTime;
+    //    if (timeClimbing <= 0 || (timeClimbing > 0 && raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial)))
+    //    {
+    //        falling = true;
+    //        activeClimb = false;
+    //        rb.isKinematic = false;
+    //    }
+    //}
+    //else
+    //{
+    //    rb.isKinematic = false;
+    //    if (!falling)
+    //        timefalling = maxtimeFalling;
+    //    else
+    //    {
+    //        velocity = 0;
+    //        timefalling -= Time.deltaTime;
+    //    }
+
+    //    if (timefalling <= 0)
+    //    {
+    //        falling = false;
+    //        velocity = auxV;
+    //        timeClimbing = maxtimeClimbing;
+    //    }
+    //    //  rb.useGravity = true;
+    //    //        //gravityMultiply = gravityMultiplyAux;
+    //    transform.GetComponent<CapsuleCollider>().height = 1.83f;
+    // }
+    //}
+
+
+
+
 
     private void FixedUpdate()
     {
@@ -180,7 +311,7 @@ public class PlayerCtrl : MonoBehaviour
 
 
         }
-        else if (rb.velocity.y == 0f)
+        else if (rb.velocity.y == 0f || activeClimb)
         {
             activedoubleJump = true;
         }
@@ -239,7 +370,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     void Move()
     {
-        if (!activeClimb)
+        //if (!activeClimb )
         {
             timeClimbing = maxtimeClimbing;
             moveH = Input.GetAxis("Horizontal");
@@ -264,8 +395,8 @@ public class PlayerCtrl : MonoBehaviour
                 Flip();
             }
             anim.SetFloat("MoveHorizontal", moveH * velocity);
-            Vector3 move = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
-            rb.MovePosition(transform.position + move);
+            Vector3 moveDirection = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
+            rb.MovePosition(transform.position + moveDirection);
 
             // If the input is moving the player right and the player is facing left...
 
@@ -279,20 +410,79 @@ public class PlayerCtrl : MonoBehaviour
             //    rb.AddTorque(transform.right * moveH * velocityEsphere);
             //}
         }
+        //else
+        //{
+        //    moveY = Input.GetAxis("Horizontal");
+
+
+        //    //   //Vector3 move = new Vector3(0f, velocity * moveY * Time.deltaTime, 0f);
+            
+        //    Vector3 move = new Vector3(0f, 0f, 0f);
+        //    rb.MovePosition(transform.position + move);
+            
+
+        //}
+
+    }
+
+    // ----CLIMB  EN PROCESO --------------------
+    //-------------------------------
+    public void Climb()
+    {
+        lateralDetect = raydect.ifRaycastLateral(m_FacingRight);
+        //bool lateralDetect = this.raydect.ifRaycastLateral(m_FacingRight, this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial);
+
+
+        
+
+        if (raydect.ifRaycastLateral(m_FacingRight))
+        {
+            activeClimb = true;
+            //moveY = Input.GetAxis("Horizontal");
+            //Vector3 move = new Vector3(0f, velocity * moveY * facing * Time.deltaTime, 0f);
+            //rb.MovePosition(transform.position + move);
+            
+
+            Debug.Log("Climb");
+        }
+        else
+        {
+            activeClimb = false;
+        }
+
+
 
     }
     void Jump()
     {
 
         bool detect = this.raydect.ifBoxDetect();
-
-        if ((formControl.actformT == FormCtrl.formType.normal))
+        
+        if (formControl.actformT == FormCtrl.formType.normal)
         {
-            if (detect)
+            if (isGrounded == true || detect)
             {
 
                 if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.Joystick1Button0))) //|| (Input.GetButtonDown("Joystick1Button0")))*/ //cambiar el input
                 {
+                    if (activeClimb)
+                    {
+                        activeClimb = false;
+                        isGrounded = false;
+                        rb.AddForce(transform.forward * forceJumpImpulse * -facing, ForceMode.Impulse);
+                        //rb.velocity = Vector3.forward * forceJump, AddForce
+                        anim.SetTrigger("Jump");
+                        SoundManager.PlaySound("Jump");
+                        Debug.Log("WallJump!");
+
+
+
+                        rb.velocity = Vector2.up * forceJump;
+
+                        //anim.SetTrigger("Jump");
+                        anim.SetFloat("VerticalSpeed", rb.velocity.y);
+
+                    }
 
                     // --------------------     Prueba de Formas de Salto          ---------------------------------
                     // Opcion1 
@@ -301,18 +491,22 @@ public class PlayerCtrl : MonoBehaviour
                     //anim.SetBool("Jump",true);
 
                     // Opcion 2
- //Updated upstream
+                    //Updated upstream
+                    else
+                    {
+                        activeClimb = false;
+                        rb.velocity = Vector3.up * forceJump;
+                        anim.SetTrigger("Jump");
+                        SoundManager.PlaySound("Jump");
+                        isGrounded = false;
 
-                    rb.velocity = Vector3.up * forceJump ;
-                    anim.SetTrigger("Jump");
-                    SoundManager.PlaySound("Jump");
 
-                    
-                        
-                    //rb.velocity = Vector2.up * forceJump;
 
-                    //anim.SetTrigger("Jump");
-                    anim.SetFloat("VerticalSpeed", rb.velocity.y);               
+                        //rb.velocity = Vector2.up * forceJump;
+
+                        //anim.SetTrigger("Jump");
+                        anim.SetFloat("VerticalSpeed", rb.velocity.y);
+                    }
                 }
               
             }
@@ -333,6 +527,7 @@ public class PlayerCtrl : MonoBehaviour
 
                     //  anim.SetBool("DobleJump",true);
                     activedoubleJump = false;
+                    
                 }
             }
 
@@ -340,22 +535,7 @@ public class PlayerCtrl : MonoBehaviour
         
 
     }
-   /* public void OnCollisionEnter(Collision collision)
-    {
-         rb = GetComponent<Rigidbody>();
-        bool detect = this.raydect.ifBoxDetect();
-        if (detect)
-        {
-            anim.SetBool("CollisionWithWall", false);
-            Debug.Log("Wall off");
-        }
-        else
-        {
-            anim.SetBool("CollisionWithWall", true);
-            Debug.Log("Wall on");
-        }
-        
-    }*/
+   
 
 
 

@@ -27,62 +27,96 @@ public class RaycastDetection : MonoBehaviour
     {
         
     }
-    public bool ifRaycastTop(Material mat) {
+    public bool ifRaycastTop(Material mat)
+    {
         RaycastHit hitUp;
         Physics.Raycast(transform.position + upOffset, transform.up, out hitUp, rayDistTop, maskClimb);
-        if (hitUp.collider != null && mat.color != hitFront.collider.GetComponent<Renderer>().sharedMaterial.color)
+        if (hitUp.collider != null && mat.color != hitUp.collider.GetComponent<Renderer>().sharedMaterial.color)
         {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public bool ifRaycast(bool facing,Material mat)
-    {
-        
-        if (facing)
-        {          
-            Physics.Raycast(transform.position + frontOffset, transform.forward, out hitFront, rayDistFront, maskClimb);
-           // Debug.Log("front" + hitFront.collider.name);
-        }
-
-        else
-        {
-           
-            Physics.Raycast(transform.position + behinfOffset, -transform.forward, out hitFront, rayDistBehind, maskClimb);
-         //  Debug.Log("behind" + hitFront.collider.name);
-        }          
-        //Physics.Raycast(transform.position + behinfOffset, -transform.forward, out hitBehind, rayDistBehind, maskClimb);
-        
-        if (hitFront.collider != null && mat.color != hitFront.collider.GetComponent<Renderer>().sharedMaterial.color)
-        {
-           // Debug.Log("hit");
-            return true;
-        }
-        else
-        {
-           // Debug.Log("nohit");
-            return false;
-        }
-    }
-    
-   /* public GameObject returnGameObj()
-    {
-
-        Physics.Raycast(transform.position + offset, transform.forward, out hit, rayDistFront, lmask2);
- 
-        if (hit.collider != null)
-        {
-            Debug.Log(hit.collider.gameObject.layer);
-            return hit.collider.gameObject;
-        }
             
+            return true;
+            
+        }
         else
-            return null;
+        {
+            return false;
+        }
+    }
+    public bool ifRaycastLateral(bool facing/*Material mat*/)
+    {
+        RaycastHit hitFront;
+        if (facing)
+        {
 
-    }*/
+            Physics.Raycast(transform.position + frontOffset, transform.forward, out hitFront, rayDistFront, maskClimb);
+             
+
+        }
+        else
+        {
+            
+            Physics.Raycast(transform.position + behinfOffset, -transform.forward, out hitFront, rayDistBehind, maskClimb);
+            
+            //if (hitFront.collider != null) Debug.Log("front" + hitFront.collider.name);
+            //}          
+            //Physics.Raycast(transform.position + behinfOffset, -transform.forward, out hitBehind, rayDistBehind, maskClimb);
+        }
+            if (hitFront.collider != null && !hitFront.collider.isTrigger) /*mat.color != hitFront.collider.GetComponent<Renderer>().sharedMaterial.color*/
+            {
+                Debug.Log("hit front");
+                return true;
+            }
+            else
+            {
+                // Debug.Log("nohit");
+                return false;
+            }
+        }
+    //public bool RcastLatBajo(bool facing, Material mat)
+    //{
+    //    RaycastHit hitFront;
+    //    if (facing)
+    //    {
+    //        Physics.Raycast(transform.position + frontOffset, transform.forward, out hitFront, rayDistFront, maskClimb);
+    //        // Debug.Log("front" + hitFront.collider.name);
+    //    }
+
+    //    else
+    //    {
+
+    //        Physics.Raycast(transform.position + behinfOffset, -transform.forward, out hitFront, rayDistBehind, maskClimb);
+    //        //  Debug.Log("behind" + hitFront.collider.name);
+    //    }
+    //    //Physics.Raycast(transform.position + behinfOffset, -transform.forward, out hitBehind, rayDistBehind, maskClimb);
+
+    //    if (hitFront.collider != null && mat.color != hitFront.collider.GetComponent<Renderer>().sharedMaterial.color)
+    //    {
+    //        Debug.Log("hit");
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        // Debug.Log("nohit");
+    //        return false;
+    //    }
+    //}
+
+
+    /* public GameObject returnGameObj()
+     {
+
+         Physics.Raycast(transform.position + offset, transform.forward, out hit, rayDistFront, lmask2);
+
+         if (hit.collider != null)
+         {
+             Debug.Log(hit.collider.gameObject.layer);
+             return hit.collider.gameObject;
+         }
+
+         else
+             return null;
+
+     }*/
     public bool ifBoxDetect()
     {
         Collider[] detected;
@@ -98,6 +132,7 @@ public class RaycastDetection : MonoBehaviour
         }
             
     }
+    //  se puede setear para que directamente si esta en "OnTriggerStay" no te permita cambiar el color
     public Collider[] RetCollBoxDectected()//para detectar que golpeo paredes pisos o lo que sea del mismo color y no me permita cambiarlo si estoy atravesandolo ojo no sacarlo!!!!
     {
         Collider[] detected;
