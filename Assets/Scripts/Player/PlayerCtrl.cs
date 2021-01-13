@@ -177,7 +177,7 @@ public class PlayerCtrl : MonoBehaviour
 
 
             //rb.isKinematic = false;
-            anim.SetBool("CollisionWithWall", false);
+            
             Debug.Log("Wall off");
 
         }
@@ -209,7 +209,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     public void OnCollisionExit(Collision collision)
     {
-        
+        anim.SetBool("CollisionWithWall", false);
         isGrounded = false;
         //debug.log("collision exit");
     }
@@ -334,7 +334,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             player.reodenarColor();
             player.escogerColor();
-            invM.addItem(player.materiales);
+            //invM.addItem(player.materiales);
             chocar = false;
         }
  
@@ -438,15 +438,17 @@ public class PlayerCtrl : MonoBehaviour
         if (raydect.ifRaycastLateral(m_FacingRight))
         {
             activeClimb = true;
+            anim.SetBool("CollisionWithWall", true);
             //moveY = Input.GetAxis("Horizontal");
             //Vector3 move = new Vector3(0f, velocity * moveY * facing * Time.deltaTime, 0f);
             //rb.MovePosition(transform.position + move);
-            
+
 
             Debug.Log("Climb");
         }
         else
         {
+            anim.SetBool("CollisionWithWall", false);
             activeClimb = false;
         }
 
@@ -462,7 +464,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (isGrounded == true || detect)
             {
-
+                anim.ResetTrigger("Jump");
                 if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.Joystick1Button0))) //|| (Input.GetButtonDown("Joystick1Button0")))*/ //cambiar el input
                 {
                     if (activeClimb)
@@ -550,7 +552,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial) ;
             player.escogerColor();
-            invM.addItem(player.materiales);
+            //invM.addItem(player.materiales);
             if (other.gameObject.tag == "Finish")
             {
                 Destroy(other.gameObject);
