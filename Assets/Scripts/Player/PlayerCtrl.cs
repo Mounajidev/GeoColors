@@ -334,7 +334,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             player.reodenarColor();
             player.escogerColor();
-            //invM.addItem(player.materiales);
+            invM.addItem(player.materiales);
             chocar = false;
         }
  
@@ -552,7 +552,8 @@ public class PlayerCtrl : MonoBehaviour
         {
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial) ;
             player.escogerColor();
-            //invM.addItem(player.materiales);
+            
+            invM.addItem(player.materiales);
             if (other.gameObject.tag == "Finish")
             {
                 Destroy(other.gameObject);
