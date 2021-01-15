@@ -5,6 +5,9 @@ TextureImporter:
   - first:
       213: -5353812092960651861
     second: DashIcon_0
+  - first:
+      213: -8078621363277735237
+    second: DashIcon_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -44,7 +47,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 3
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -110,7 +113,7 @@ TextureImporter:
         width: 277
         height: 260
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -118,6 +121,27 @@ TextureImporter:
       bones: []
       spriteID: ba5c3e4644073b5b0800000000000000
       internalID: -5353812092960651861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashIcon_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 540
+        width: 282
+        height: 259
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbad2f62ca8f2ef80800000000000000
+      internalID: -8078621363277735237
       vertices: []
       indices: 
       edges: []

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
-
+    ParticleSystem colorExplotion;
     public bool lateralDetect = true;
     public float forceJumpImpulse = 0.2f;
     public bool isGrounded;
@@ -40,7 +40,7 @@ public class PlayerCtrl : MonoBehaviour
      public InventoryManager invM;
     void Start()
     {
-        
+        colorExplotion = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = new Character(this.gameObject);
         rb = GetComponent<Rigidbody>();
@@ -140,17 +140,17 @@ public class PlayerCtrl : MonoBehaviour
     //         transform.GetComponent<CapsuleCollider>().height = 1.83f;
     //    }
     //}
-    //private void LateUpdate()
-    //{
-    //   // Debug.Log(rb.velocity.y);
-    //   // if(rb.velocity.y>0 )
-    //  //  Debug.Log("aciendo");
-    //  //  else if(rb.velocity.y < 0 )
-    //  //      Debug.Log("deciendo");      
-    //    anim.SetFloat("VerticalSpeed", rb.velocity.y);
+    private void LateUpdate()
+    {
+        // Debug.Log(rb.velocity.y);
+        // if(rb.velocity.y>0 )
+        //  Debug.Log("aciendo");
+        //  else if(rb.velocity.y < 0 )
+        //      Debug.Log("deciendo");     wd 
+        anim.SetFloat("VerticalSpeed", rb.velocity.y);
 
-    //    climbAnimation();
-    //}
+        
+    }
     //private void climbAnimation() {
     //    if (activeClimb)
     //    {
@@ -332,6 +332,7 @@ public class PlayerCtrl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W) || (Input.GetAxis("JoystickUp") > 0 && !chocar && player.tengoColor()))
         {
+            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             player.reodenarColor();
             player.escogerColor();
             invM.addItem(player.materiales);
@@ -543,13 +544,14 @@ public class PlayerCtrl : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        //        //cambiar
+        //        //cambiar ffefw
         //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
         //        //la condicion del if debe fijarse si se puede tomar el color o no 
 
         bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
+            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial) ;
             player.escogerColor();
             
