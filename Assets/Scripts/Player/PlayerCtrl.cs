@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class PlayerCtrl : MonoBehaviour
 {
     ParticleSystem colorExplotion;
@@ -34,12 +34,22 @@ public class PlayerCtrl : MonoBehaviour
     public bool activeClimb;
     public float timeClimbing, timefalling;
     public float maxtimeClimbing, maxtimeFalling;
-    bool falling;
+    //bool falling;
+    public bool chocar;
     float auxV;
     [Header("Configuration for Item")]
      public InventoryManager invM;
-    void Start()
+    //input
+    private PlayerInput playerInput;
+    InpAct inputAction;
+
+    private void Awake()
     {
+        inputAction = new InpAct();
+    }
+     void Start()
+    {
+       
         colorExplotion = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = new Character(this.gameObject);
@@ -50,7 +60,8 @@ public class PlayerCtrl : MonoBehaviour
         //gravityMultiplyAux = gravityMultiply;
         timeClimbing = maxtimeClimbing;
         timefalling = maxtimeFalling;
-        falling = false;
+        // falling = false;
+        chocar = false;
         auxV = velocity;
     }
     ///Hojo hay que cambiar todos los imput para que funcione en android por ahora esta todo como si fuera un teclado
@@ -59,14 +70,25 @@ public class PlayerCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EscogerColor();
-        Jump();
-        Dash();
-        Climb();
-
-
+       InputSystem.Update();
+       EscogerColor();          
+       Climb();
     }
-
+    private void LateUpdate()
+    {
+        // Debug.Log(rb.velocity.y);
+        // if(rb.velocity.y>0 )
+        //  Debug.Log("aciendo");
+        //  else if(rb.velocity.y < 0 )
+        //      Debug.Log("deciendo");     wd 
+         
+        anim.SetFloat("VerticalSpeed", rb.velocity.y);
+    }
+    private void FixedUpdate()
+    {
+        Move();         
+        Gravity();
+    }
     // Opcion 1  -   Climb Con Raycast ( el que estaba )
     //-------------------------------------------------------------------------------------
 
@@ -140,17 +162,7 @@ public class PlayerCtrl : MonoBehaviour
     //         transform.GetComponent<CapsuleCollider>().height = 1.83f;
     //    }
     //}
-    private void LateUpdate()
-    {
-        // Debug.Log(rb.velocity.y);
-        // if(rb.velocity.y>0 )
-        //  Debug.Log("aciendo");
-        //  else if(rb.velocity.y < 0 )
-        //      Debug.Log("deciendo");     wd 
-        anim.SetFloat("VerticalSpeed", rb.velocity.y);
 
-        
-    }
     //private void climbAnimation() {
     //    if (activeClimb)
     //    {
@@ -178,7 +190,7 @@ public class PlayerCtrl : MonoBehaviour
 
             //rb.isKinematic = false;
             
-            Debug.Log("Wall off");
+          //  Debug.Log("Wall off");
 
         }
         else if ( !raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial))
@@ -196,7 +208,7 @@ public class PlayerCtrl : MonoBehaviour
         bool detect = this.raydect.ifBoxDetect();
         if (!detect && lateralDetect)
         {
-            moveH = Input.GetAxis("Horizontal");
+          ///  moveH = Input.GetAxis("Horizontal");
 
             rb.velocity = Vector3.up * moveH * climbingMove * facing;
             //   //Vector3 move = new Vector3(0f, velocity * moveY * Time.deltaTime, 0f);
@@ -282,15 +294,7 @@ public class PlayerCtrl : MonoBehaviour
 
 
 
-    private void FixedUpdate()
-    {
-        
-        Move();
-        Climb();
-        Gravity();
-
-
-    }
+ 
     public void Gravity()
     {
         ////  Opcion 1:  Gravedad todo el tiempo
@@ -301,7 +305,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
         }*/
-        if (rb.velocity.y > 0f && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
+        if (Mathf.Round(rb.velocity.y) > 0f)// && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
         {
             // Opcopn 1 -- la que usamos por el momento -----
             rb.AddForce(-transform.up * gravityMultiply * fallAfterJump, ForceMode.Acceleration);
@@ -311,7 +315,7 @@ public class PlayerCtrl : MonoBehaviour
 
 
         }
-        else if (rb.velocity.y == 0f || activeClimb)
+        else if (Mathf.Round(rb.velocity.y) == 0f || activeClimb)
         {
             activedoubleJump = true;
         }
@@ -321,7 +325,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         
         coll = raydect.RetCollBoxDectected();
-        bool chocar = false;
+        
         foreach (Collider c in coll)
         {
             if (c.gameObject.GetComponent<Renderer>().sharedMaterial == this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial)
@@ -330,26 +334,18 @@ public class PlayerCtrl : MonoBehaviour
                 break;
             }
         }
-        if (Input.GetKeyDown(KeyCode.W) || (Input.GetAxis("JoystickUp") > 0 && !chocar && player.tengoColor()))
-        {
-            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-            player.reodenarColor();
-            player.escogerColor();
-            invM.addItem(player.materiales);
-            chocar = false;
-        }
+        
  
     }
 
     public void Dash()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && activeDash == true)
-        {
+         
             this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
             StartCoroutine(Invoke());
             anim.SetBool("Dash", true);
             SoundManager.PlaySound("Dash");
-        }
+      
 
     }
     public IEnumerator Invoke()
@@ -375,7 +371,7 @@ public class PlayerCtrl : MonoBehaviour
         //if (!activeClimb )
         {
             timeClimbing = maxtimeClimbing;
-            moveH = Input.GetAxis("Horizontal");
+        //    moveH = Input.GetAxis("Horizontal");
             //if (formControl.actformT == FormCtrl.formType.normal)
             //{ 
             /* if (moveH >= 0.1)
@@ -467,14 +463,12 @@ public class PlayerCtrl : MonoBehaviour
     {
 
         bool detect = this.raydect.ifBoxDetect();
-        
+
         if (formControl.actformT == FormCtrl.formType.normal)
         {
             if (isGrounded == true || detect)
             {
-                anim.ResetTrigger("Jump");
-                if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.Joystick1Button0))) //|| (Input.GetButtonDown("Joystick1Button0")))*/ //cambiar el input
-                {
+                anim.ResetTrigger("Jump");               
                     if (activeClimb)
                     {
                         this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
@@ -519,13 +513,12 @@ public class PlayerCtrl : MonoBehaviour
                         //anim.SetTrigger("Jump");
                         anim.SetFloat("VerticalSpeed", rb.velocity.y);
                     }
-                }
-              
+               
+
             }
             else if (!detect && activedoubleJump && !activeClimb)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.Joystick1Button0)))//cambiar el input
-                {
+                
                     //  Opcion 1 ----
 
                     //float forceJump2 = forceJump + forceJump * 0.8f;
@@ -539,15 +532,15 @@ public class PlayerCtrl : MonoBehaviour
 
                     //  anim.SetBool("DobleJump",true);
                     activedoubleJump = false;
-                    
-                }
+
+                 
             }
 
         }
-        
+
 
     }
-   
+
 
 
 
@@ -596,6 +589,44 @@ public class PlayerCtrl : MonoBehaviour
         transform.localScale = theScale;
          
     }
+    /// <summary>
+    /// Metodos de los inputs 
+    /// </summary>
+    /// <param name="inputvalue">el input value contiene el valor de la tecla entre 1 y -1</param>
+    private void OnMove(InputValue inputvalue)
+    {
+        Vector2 inputmove = inputvalue.Get<Vector2>();
+        moveH = inputmove.x;      
+    }
+    private void OnJump(InputValue inputvalue) {
+        
+        Jump();
+    }
+    /* private void OnEnable()
+     {
 
-   
+         inputAction.Enable();
+     }
+     private void OnDisable()
+     {
+
+         inputAction.Disable();
+     }*/
+
+    private void OnChoseC(InputValue inputvalue) {
+         
+        if (!chocar && player.tengoColor())
+        {
+            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+            player.reodenarColor();
+            player.escogerColor();
+            invM.addItem(player.materiales);
+            chocar = false;
+        }
+    }
+
+    private void OnDash(InputValue inputvalue)
+    {
+         Dash();
+    }
 }
