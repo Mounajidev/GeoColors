@@ -77,12 +77,12 @@ public class PlayerCtrl : MonoBehaviour
     private void LateUpdate()
     {
         // Debug.Log(rb.velocity.y);
-        // if(rb.velocity.y>0 )
-        //  Debug.Log("aciendo");
-        //  else if(rb.velocity.y < 0 )
-        //      Debug.Log("deciendo");     wd 
+         if(Mathf.Round(rb.velocity.y)>0 )
+           Debug.Log("aciendo");
+          else if(Mathf.Round(rb.velocity.y) < 0 )
+          Debug.Log("deciendo");    
          
-        anim.SetFloat("VerticalSpeed", rb.velocity.y);
+     //   anim.SetFloat("VerticalSpeed", rb.velocity.y);
     }
     private void FixedUpdate()
     {
