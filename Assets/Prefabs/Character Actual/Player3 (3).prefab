@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6439649089741362477}
   - component: {fileID: 3405402090548478123}
   - component: {fileID: 7028890591108332931}
+  - component: {fileID: 7363674169802517219}
   m_Layer: 0
   m_Name: Player3 (3)
   m_TagString: Player
@@ -96,7 +97,7 @@ MonoBehaviour:
   velocityEsphere: 5
   gravityMultiply: 15
   fallAfterJump: 2
-  forceJump: 11
+  forceJump: 15
   dashForce: 9
   dashDuration: 2
   raydect: {fileID: 0}
@@ -107,6 +108,7 @@ MonoBehaviour:
   timefalling: 0
   maxtimeClimbing: 1.5
   maxtimeFalling: 1
+  chocar: 0
   invM: {fileID: 0}
 --- !u!114 &8218499945979729815
 MonoBehaviour:
@@ -115,7 +117,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303671061544419174}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fbff033a5d45124cbef71d6d118b24f, type: 3}
   m_Name: 
@@ -163,7 +165,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303671061544419174}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fc5a0bbfb9c851468f306ac62925184, type: 3}
   m_Name: 
@@ -187,6 +189,37 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7363674169802517219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303671061544419174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: fd972f97d3d1d1a469c2aacff86087bd,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &2984371235462093461
 GameObject:
   m_ObjectHideFlags: 0
