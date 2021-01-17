@@ -345,6 +345,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && activeDash == true)
         {
+            this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
             StartCoroutine(Invoke());
             anim.SetBool("Dash", true);
             SoundManager.PlaySound("Dash");
@@ -395,6 +396,11 @@ public class PlayerCtrl : MonoBehaviour
                 // ... flip the player.
                 Flip();
             }
+            else if (moveH != 0)
+            {
+                this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
+            }
+           
             anim.SetFloat("MoveHorizontal", moveH * velocity);
             Vector3 moveDirection = new Vector3(0f, 0f, velocity * moveH * Time.deltaTime);
             rb.MovePosition(transform.position + moveDirection);
@@ -438,6 +444,7 @@ public class PlayerCtrl : MonoBehaviour
 
         if (raydect.ifRaycastLateral(m_FacingRight))
         {
+            this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
             activeClimb = true;
             anim.SetBool("CollisionWithWall", true);
             //moveY = Input.GetAxis("Horizontal");
@@ -470,6 +477,7 @@ public class PlayerCtrl : MonoBehaviour
                 {
                     if (activeClimb)
                     {
+                        this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
                         activeClimb = false;
                         isGrounded = false;
                         rb.AddForce(transform.forward * forceJumpImpulse * -facing, ForceMode.Impulse);
@@ -497,6 +505,7 @@ public class PlayerCtrl : MonoBehaviour
                     //Updated upstream
                     else
                     {
+                        this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
                         activeClimb = false;
                         rb.velocity = Vector3.up * forceJump;
                         anim.SetTrigger("Jump");
@@ -579,8 +588,9 @@ public class PlayerCtrl : MonoBehaviour
             facing = -1;
             this.GetComponent<RaycastDetection>().offset.z = 0.06f;
         }
-            
+
         // Multiply the player's x local scale by -1.
+        this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
         Vector3 theScale = transform.localScale;
         theScale.z *= -1;
         transform.localScale = theScale;
