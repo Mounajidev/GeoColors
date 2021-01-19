@@ -42,14 +42,14 @@ public class PlayerCtrl : MonoBehaviour
     //input
     private PlayerInput playerInput;
     InpAct inputAction;
-
+    public bool realizedB ;
     private void Awake()
     {
         inputAction = new InpAct();
     }
      void Start()
     {
-       
+        realizedB = true;
         colorExplotion = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = new Character(this.gameObject);
@@ -72,22 +72,24 @@ public class PlayerCtrl : MonoBehaviour
     {
        InputSystem.Update();
        EscogerColor();          
-       Climb();
+       
     }
     private void LateUpdate()
     {
         // Debug.Log(rb.velocity.y);
-         if(Mathf.Round(rb.velocity.y)>0 )
-           Debug.Log("aciendo");
-          else if(Mathf.Round(rb.velocity.y) < 0 )
-          Debug.Log("deciendo");    
-         
-     //   anim.SetFloat("VerticalSpeed", rb.velocity.y);
+        /*  if(Mathf.Round(rb.velocity.y)>0 )
+            Debug.Log("aciendo");
+           else if(Mathf.Round(rb.velocity.y) < 0 )
+           Debug.Log("deciendo");*/
+
+        //   anim.SetFloat("VerticalSpeed", rb.velocity.y);
+       /// Debug.Log(Mathf.Round(rb.velocity.y));
+        Gravity();
     }
     private void FixedUpdate()
     {
-        Move();         
-        Gravity();
+        Move();
+        Climb();
     }
     // Opcion 1  -   Climb Con Raycast ( el que estaba )
     //-------------------------------------------------------------------------------------
@@ -305,7 +307,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
         }*/
-        if (Mathf.Round(rb.velocity.y) > 0f)// && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
+        if (Mathf.Round(rb.velocity.y) > 0f && !realizedB)// && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
         {
             // Opcopn 1 -- la que usamos por el momento -----
             rb.AddForce(-transform.up * gravityMultiply * fallAfterJump, ForceMode.Acceleration);
@@ -340,13 +342,13 @@ public class PlayerCtrl : MonoBehaviour
 
     public void Dash()
     {
-         
+        if(activeDash)
+        {
             this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
             StartCoroutine(Invoke());
             anim.SetBool("Dash", true);
             SoundManager.PlaySound("Dash");
-      
-
+        }
     }
     public IEnumerator Invoke()
     {
@@ -434,10 +436,6 @@ public class PlayerCtrl : MonoBehaviour
     {
         lateralDetect = raydect.ifRaycastLateral(m_FacingRight);
         //bool lateralDetect = this.raydect.ifRaycastLateral(m_FacingRight, this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial);
-
-
-        
-
         if (raydect.ifRaycastLateral(m_FacingRight))
         {
             this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
@@ -468,7 +466,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (isGrounded == true || detect)
             {
-                anim.ResetTrigger("Jump");               
+                    anim.ResetTrigger("Jump");               
                     if (activeClimb)
                     {
                         this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
@@ -479,11 +477,7 @@ public class PlayerCtrl : MonoBehaviour
                         anim.SetTrigger("Jump");
                         SoundManager.PlaySound("Jump");
                         Debug.Log("WallJump!");
-
-
-
                         rb.velocity = Vector2.up * forceJump;
-
                         //anim.SetTrigger("Jump");
                         anim.SetFloat("VerticalSpeed", rb.velocity.y);
 
@@ -505,20 +499,14 @@ public class PlayerCtrl : MonoBehaviour
                         anim.SetTrigger("Jump");
                         SoundManager.PlaySound("Jump");
                         isGrounded = false;
-
-
-
                         //rb.velocity = Vector2.up * forceJump;
-
                         //anim.SetTrigger("Jump");
                         anim.SetFloat("VerticalSpeed", rb.velocity.y);
-                    }
-               
+                    }               
 
             }
             else if (!detect && activedoubleJump && !activeClimb)
-            {
-                
+            {              
                     //  Opcion 1 ----
 
                     //float forceJump2 = forceJump + forceJump * 0.8f;
@@ -529,7 +517,6 @@ public class PlayerCtrl : MonoBehaviour
                     rb.velocity = Vector2.up * forceJump;
                     anim.SetTrigger("Jump");
                     SoundManager.PlaySound("Jump");
-
                     //  anim.SetBool("DobleJump",true);
                     activedoubleJump = false;
 
@@ -599,8 +586,13 @@ public class PlayerCtrl : MonoBehaviour
         moveH = inputmove.x;      
     }
     private void OnJump(InputValue inputvalue) {
+        realizedB = true;
+        Jump();          
         
-        Jump();
+    }
+    private void OnJumpR() {
+        Debug.Log("on realiced");
+        realizedB = false;
     }
     /* private void OnEnable()
      {
