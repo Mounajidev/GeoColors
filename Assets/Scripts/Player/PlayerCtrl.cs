@@ -28,6 +28,7 @@ public class PlayerCtrl : MonoBehaviour
     public RaycastDetection raydect;
     FormCtrl formControl;// actformT; 
     public bool activedoubleJump, activeDash;
+    public int countdoubleJump;
     public Character player;
     private int facing;
     [Header("Configuration for Climbing")]
@@ -71,8 +72,8 @@ public class PlayerCtrl : MonoBehaviour
     void Update()
     {
        InputSystem.Update();
-       EscogerColor();          
-       
+       EscogerColor();
+        Climb();
     }
     private void LateUpdate()
     {
@@ -89,7 +90,7 @@ public class PlayerCtrl : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Climb();
+        
     }
     // Opcion 1  -   Climb Con Raycast ( el que estaba )
     //-------------------------------------------------------------------------------------
@@ -180,53 +181,8 @@ public class PlayerCtrl : MonoBehaviour
 
     // Opcion 2  Climb con enter Collider ---------------------------------------------
     //---------------------------------------------------------------
-    public void OnCollisionEnter(Collision collision)
-    {
-        
-        bool detect = this.raydect.ifBoxDetect();
-        isGrounded = true;
-
-        if (detect)
-        {
-
-
-            //rb.isKinematic = false;
-            
-          //  Debug.Log("Wall off");
-
-        }
-        else if ( !raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial))
-        {
-            Debug.Log("Collision Wall");
-            activeClimb = true;
-            anim.SetBool("CollisionWithWall", true);
-
-        }
-
-    }
-    public void OnCollisionStay(Collision collision)
-    {
-        lateralDetect = raydect.ifRaycastLateral(m_FacingRight);
-        bool detect = this.raydect.ifBoxDetect();
-        if (!detect && lateralDetect)
-        {
-          ///  moveH = Input.GetAxis("Horizontal");
-
-            rb.velocity = Vector3.up * moveH * climbingMove * facing;
-            //   //Vector3 move = new Vector3(0f, velocity * moveY * Time.deltaTime, 0f);
-            //Vector3 moveDirection = new Vector3(0f, velocity * Mathf.Abs(moveH) * Time.deltaTime, 0);
-            //moveDirection.y = moveH * Time.deltaTime;
-            //rb.MovePosition(transform.position.y * moveDirection);
-            Debug.Log("Collision Stay");
-
-        }
-    }
-    public void OnCollisionExit(Collision collision)
-    {
-        anim.SetBool("CollisionWithWall", false);
-        isGrounded = false;
-        //debug.log("collision exit");
-    }
+   
+   
     //public void Climb()
     //{
     //    if (activeClimb)
@@ -312,14 +268,11 @@ public class PlayerCtrl : MonoBehaviour
             // Opcopn 1 -- la que usamos por el momento -----
             rb.AddForce(-transform.up * gravityMultiply * fallAfterJump, ForceMode.Acceleration);
             //rb.velocity = Vector2.up * fallAfterJump * -1 * Time.deltaTime;
-
             // opcion 2 ---
-
-
         }
-        else if (Mathf.Round(rb.velocity.y) == 0f || activeClimb)
+        else if (activeClimb)
         {
-            activedoubleJump = true;
+            countdoubleJump=0;
         }
     }
    
@@ -371,8 +324,8 @@ public class PlayerCtrl : MonoBehaviour
     void Move()
     {
         //if (!activeClimb )
-        {
-            timeClimbing = maxtimeClimbing;
+      //  {
+          //  timeClimbing = maxtimeClimbing;
         //    moveH = Input.GetAxis("Horizontal");
             //if (formControl.actformT == FormCtrl.formType.normal)
             //{ 
@@ -414,7 +367,7 @@ public class PlayerCtrl : MonoBehaviour
             //    rb.AddTorque(new Vector3(moveH, 0f, 0f) * velocityEsphere);
             //    rb.AddTorque(transform.right * moveH * velocityEsphere);
             //}
-        }
+      //  }
         //else
         //{
         //    moveY = Input.GetAxis("Horizontal");
@@ -466,6 +419,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             if (isGrounded == true || detect)
             {
+                    countdoubleJump++;
                     anim.ResetTrigger("Jump");               
                     if (activeClimb)
                     {
@@ -505,20 +459,19 @@ public class PlayerCtrl : MonoBehaviour
                     }               
 
             }
-            else if (!detect && activedoubleJump && !activeClimb)
-            {              
-                    //  Opcion 1 ----
-
-                    //float forceJump2 = forceJump + forceJump * 0.8f;
-                    //rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
-
+            else if (!detect && countdoubleJump<2 && !activeClimb)
+            {
+                countdoubleJump++;
+                //  Opcion 1 ----
+                Debug.Log(countdoubleJump);
+                //float forceJump2 = forceJump + forceJump * 0.8f;
+                //rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
                     // Opcion 2 ----
-
-                    rb.velocity = Vector2.up * forceJump;
+                rb.velocity = Vector2.up * forceJump;
                     anim.SetTrigger("Jump");
                     SoundManager.PlaySound("Jump");
                     //  anim.SetBool("DobleJump",true);
-                    activedoubleJump = false;
+                  //  activedoubleJump = false;
 
                  
             }
@@ -528,31 +481,6 @@ public class PlayerCtrl : MonoBehaviour
 
     }
 
-
-
-
-    public void OnTriggerEnter(Collider other)
-    {
-        //        //cambiar ffefw
-        //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
-        //        //la condicion del if debe fijarse si se puede tomar el color o no 
-
-        bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
-        if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
-        {
-            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial) ;
-            player.escogerColor();
-            
-            invM.addItem(player.materiales);
-            if (other.gameObject.tag == "Finish")
-            {
-                Destroy(other.gameObject);
-            }
-            //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
-        }
-
-    }
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
@@ -580,31 +508,13 @@ public class PlayerCtrl : MonoBehaviour
     /// Metodos de los inputs 
     /// </summary>
     /// <param name="inputvalue">el input value contiene el valor de la tecla entre 1 y -1</param>
-    private void OnMove(InputValue inputvalue)
-    {
-        Vector2 inputmove = inputvalue.Get<Vector2>();
-        moveH = inputmove.x;      
-    }
-    private void OnJump(InputValue inputvalue) {
-        realizedB = true;
-        Jump();          
-        
-    }
-    private void OnJumpR() {
-        Debug.Log("on realiced");
-        realizedB = false;
-    }
-    /* private void OnEnable()
-     {
+   
 
-         inputAction.Enable();
-     }
-     private void OnDisable()
-     {
 
-         inputAction.Disable();
-     }*/
-
+    /// <summary>
+    /// inputs
+    /// </summary>
+    /// <param name="inputvalue"></param>
     private void OnChoseC(InputValue inputvalue) {
          
         if (!chocar && player.tengoColor())
@@ -620,5 +530,107 @@ public class PlayerCtrl : MonoBehaviour
     private void OnDash(InputValue inputvalue)
     {
          Dash();
+    }
+    private void OnMove(InputValue inputvalue)
+    {
+        Vector2 inputmove = inputvalue.Get<Vector2>();
+        moveH = inputmove.x;
+    }
+    private void OnJump(InputValue inputvalue)
+    {
+        realizedB = true;
+        Jump();
+
+    }
+    private void OnJumpR()
+    {
+
+        realizedB = false;
+    }
+    /* private void OnEnable()
+     {
+
+         inputAction.Enable();
+     }
+     private void OnDisable()
+     {
+
+         inputAction.Disable();
+     }*/
+    /// <summary>
+    /// collision trigers
+    /// </summary>
+    /// <param name="collision"></param>
+
+
+    public void OnCollisionEnter(Collision collision)
+    {
+
+        bool detect = this.raydect.ifBoxDetect();
+        isGrounded = true;
+
+        if (detect)
+        {
+
+
+            //rb.isKinematic = false;
+             
+            //  Debug.Log("Wall off");
+            countdoubleJump = 0;
+        }
+        else if (!raydect.ifRaycastTop(this.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial))
+        {
+            Debug.Log("Collision Wall");
+            activeClimb = true;
+            anim.SetBool("CollisionWithWall", true);
+
+        }
+
+    }
+
+    public void OnCollisionStay(Collision collision)
+    {
+        lateralDetect = raydect.ifRaycastLateral(m_FacingRight);
+        bool detect = this.raydect.ifBoxDetect();
+        if (!detect && lateralDetect)
+        {
+            ///  moveH = Input.GetAxis("Horizontal");
+
+            rb.velocity = Vector3.up * moveH * climbingMove * facing;
+            //   //Vector3 move = new Vector3(0f, velocity * moveY * Time.deltaTime, 0f);
+            //Vector3 moveDirection = new Vector3(0f, velocity * Mathf.Abs(moveH) * Time.deltaTime, 0);
+            //moveDirection.y = moveH * Time.deltaTime;
+            //rb.MovePosition(transform.position.y * moveDirection);
+            Debug.Log("Collision Stay");
+
+        }
+    }
+    public void OnCollisionExit(Collision collision)
+    {
+        anim.SetBool("CollisionWithWall", false);
+        isGrounded = false;
+        //debug.log("collision exit");
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        //        //cambiar ffefw
+        //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
+        //        //la condicion del if debe fijarse si se puede tomar el color o no 
+
+        bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
+        if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
+        {
+            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
+            player.escogerColor();
+
+            invM.addItem(player.materiales);
+            if (other.gameObject.tag == "Finish")
+            {
+                Destroy(other.gameObject);
+            }
+            //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
+        }
+
     }
 }
