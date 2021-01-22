@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
+
 public class LevelMagament : MonoBehaviour
 {
     GameObject SphereC;
@@ -32,7 +32,7 @@ public class LevelMagament : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputSystem.Update();
+        
         currentTime -= Time.deltaTime;
         c.text = "Tiempo Hasta Despertar:"+Mathf.RoundToInt(currentTime).ToString();
         if (currentTime <= 0) {
