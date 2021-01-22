@@ -103,7 +103,7 @@ public class LevelMagament : MonoBehaviour
         sphereG.gameObject.GetComponent<Renderer>().sharedMaterial = playerG.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
         if (sphereG.gameObject.GetComponent<Renderer>().sharedMaterial.name == "MaterialYellow")
         {
-            SphereC.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.name
+            //SphereC.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.name
         }
     }
 
