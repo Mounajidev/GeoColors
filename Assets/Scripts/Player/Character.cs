@@ -46,6 +46,7 @@ public class Character
     public void escogerColor() {
         if (materiales.Count>0)
             character.transform.GetChild(0).GetComponent< Renderer>().sharedMaterial = materiales[0];         
+        
     }
     public void  reodenarColor() 
     {
