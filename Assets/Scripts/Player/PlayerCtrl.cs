@@ -40,18 +40,17 @@ public class PlayerCtrl : MonoBehaviour
     public bool chocar;
     float auxV;
     [Header("Configuration for Item")]
-     public InventoryManager invM;
-    //input
-    private PlayerInput playerInput;
-    InpAct inputAction;
-    public bool realizedB ;
+    public InventoryManager invM;    
+    //private bool realizedB ;
+    [Header("Input")]
+    public InputManager _inputMan;
     private void Awake()
     {
-        inputAction = new InpAct();
+ 
     }
      void Start()
     {
-        realizedB = true;
+       // realizedB = true;
         colorExplotion = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = new Character(this.gameObject);
@@ -72,9 +71,11 @@ public class PlayerCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       InputSystem.Update();
+      
        EscogerColor();
-        Climb();
+       Climb();
+        Jump();
+        Dash();
     }
     private void LateUpdate()
     {
@@ -90,6 +91,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        
         Move();
         
     }
@@ -250,10 +252,6 @@ public class PlayerCtrl : MonoBehaviour
     //}
 
 
-
-
-
- 
     public void Gravity()
     {
         ////  Opcion 1:  Gravedad todo el tiempo
@@ -264,7 +262,8 @@ public class PlayerCtrl : MonoBehaviour
         {
             rb.velocity = Vector2.up * Physics.gravity.y * (gravityMultiply - 1) * Time.deltaTime;
         }*/
-        if (Mathf.Round(rb.velocity.y) > 0f && !realizedB)// && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
+         
+        if (Mathf.Round(rb.velocity.y) > 0f && !_inputMan.jumpR)// && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.Joystick1Button0))
         {
             // Opcopn 1 -- la que usamos por el momento -----
             rb.AddForce(-transform.up * gravityMultiply * fallAfterJump, ForceMode.Acceleration);
@@ -278,8 +277,7 @@ public class PlayerCtrl : MonoBehaviour
     }
    
     public void EscogerColor()
-    {
-        
+    {      
         coll = raydect.RetCollBoxDectected();
         
         foreach (Collider c in coll)
@@ -290,18 +288,21 @@ public class PlayerCtrl : MonoBehaviour
                 break;
             }
         }
-        
- 
+        OnChoseC();
     }
 
     public void Dash()
     {
-        if(activeDash)
+        if (_inputMan.dash) 
         {
-            this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
-            StartCoroutine(Invoke());
-            anim.SetBool("Dash", true);
-            SoundManager.PlaySound("Dash");
+            Debug.Log("ingresa");
+            if(activeDash)
+             {
+                this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
+                StartCoroutine(Invoke());
+                anim.SetBool("Dash", true);
+                 SoundManager.PlaySound("Dash");
+             }
         }
     }
     public IEnumerator Invoke()
@@ -325,18 +326,19 @@ public class PlayerCtrl : MonoBehaviour
     void Move()
     {
         //if (!activeClimb )
-      //  {
-          //  timeClimbing = maxtimeClimbing;
+        //  {
+        //  timeClimbing = maxtimeClimbing;
         //    moveH = Input.GetAxis("Horizontal");
-            //if (formControl.actformT == FormCtrl.formType.normal)
-            //{ 
-            /* if (moveH >= 0.1)
-                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-             else if (moveH <= -0.1)
-                 transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
+        //if (formControl.actformT == FormCtrl.formType.normal)
+        //{ 
+        /* if (moveH >= 0.1)
+             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+         else if (moveH <= -0.1)
+             transform.rotation = Quaternion.Euler(0f, -180f, 0f);*/
 
-            //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
-            //que maneje las animaciones del mapa      
+        //hay que crear un animation manager que se encargue de manejar las animaciones podria ser una buena forma para 
+        //que maneje las animaciones del mapa 
+            moveH = _inputMan.horizontalMove;
             if (moveH > 0 && !m_FacingRight)
             {
                 // ... flip the player.
@@ -415,13 +417,14 @@ public class PlayerCtrl : MonoBehaviour
     {
 
         bool detect = this.raydect.ifBoxDetect();
-
-        if (formControl.actformT == FormCtrl.formType.normal)
+        if (_inputMan.jump)
         {
-            if (isGrounded == true || detect)
+            if (formControl.actformT == FormCtrl.formType.normal)
             {
+                if (isGrounded == true || detect)
+                {
                     countdoubleJump++;
-                    anim.ResetTrigger("Jump");               
+                    anim.ResetTrigger("Jump");
                     if (activeClimb)
                     {
                         this.transform.GetChild(3).GetComponent<ParticleSystem>().Play();
@@ -457,28 +460,28 @@ public class PlayerCtrl : MonoBehaviour
                         //rb.velocity = Vector2.up * forceJump;
                         //anim.SetTrigger("Jump");
                         anim.SetFloat("VerticalSpeed", rb.velocity.y);
-                    }               
+                    }
 
-            }
-            else if (!detect && countdoubleJump<2 && !activeClimb)
-            {
-                countdoubleJump++;
-                //  Opcion 1 ----
-                Debug.Log(countdoubleJump);
-                //float forceJump2 = forceJump + forceJump * 0.8f;
-                //rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
+                }
+                else if (!detect && countdoubleJump < 2 && !activeClimb)
+                {
+                    countdoubleJump++;
+                    //  Opcion 1 ----
+                    Debug.Log(countdoubleJump);
+                    //float forceJump2 = forceJump + forceJump * 0.8f;
+                    //rb.AddForce(transform.up * forceJump2, ForceMode.Impulse);
                     // Opcion 2 ----
-                rb.velocity = Vector2.up * forceJump;
+                    rb.velocity = Vector2.up * forceJump;
                     anim.SetTrigger("Jump");
                     SoundManager.PlaySound("Jump");
                     //  anim.SetBool("DobleJump",true);
-                  //  activedoubleJump = false;
+                    //  activedoubleJump = false;
 
-                 
+
+                }
+
             }
-
         }
-
 
     }
 
@@ -547,19 +550,21 @@ public class PlayerCtrl : MonoBehaviour
     /// inputs
     /// </summary>
     /// <param name="inputvalue"></param>
-    private void OnChoseC(InputValue inputvalue) {
-         
-        if (!chocar && player.tengoColor())
+    private void OnChoseC() {
+        if (_inputMan.chooseC)
         {
-            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-            player.reodenarColor();
-            player.escogerColor();
-            invM.addItem(player.materiales);
-            chocar = false;
-        }
+            if (!chocar && player.tengoColor())
+            {
+                this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+                player.reodenarColor();
+                player.escogerColor();
+                invM.addItem(player.materiales);
+                chocar = false;
+            }
+        }      
     }
 
-    private void OnDash(InputValue inputvalue)
+   /* private void OnDash(InputValue inputvalue)
     {
          Dash();
     }
@@ -567,19 +572,21 @@ public class PlayerCtrl : MonoBehaviour
     {
         Vector2 inputmove = inputvalue.Get<Vector2>();
         moveH = inputmove.x;
+        Debug.Log(moveH);
     }
     private void OnJump(InputValue inputvalue)
     {
+        Debug.Log("Entro");
         realizedB = true;
         Jump();
 
     }
     private void OnJumpR()
     {
-
+        Debug.Log("EntroR");
         realizedB = false;
     }
-    /* private void OnEnable()
+     private void OnEnable()
      {
 
          inputAction.Enable();
@@ -588,7 +595,10 @@ public class PlayerCtrl : MonoBehaviour
      {
 
          inputAction.Disable();
-     }*/
+     }
+
+
+    */
     /// <summary>
     /// collision trigers
     /// </summary>

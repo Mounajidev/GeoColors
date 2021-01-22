@@ -12,27 +12,18 @@ public class LevelMagament : MonoBehaviour
     public GameObject[] casillas;
     float currentTime, maxTime;
     public Text c;
-    private InpCanvas impCanvas;
+   // private InpCanvas impCanvas;
     bool paused;
     // Start is called before the first frame update
-    private void OnEnable()
-    {
-        impCanvas.Enable();
-        
-    }
-    private void OnDisable()
-    {
-        impCanvas.Disable();
-    }
-
+    public InputManager _inputMan;
     private void Awake()
     {
-        impCanvas = new InpCanvas();
+        //impCanvas = new InpCanvas();
     }
     void Start()
     {
         paused = false;
-        impCanvas.InputCanvas.Pause.performed += _ => DetectPause();
+       // impCanvas.InputCanvas.Pause.performed += _ => DetectPause();
         maxTime =450;
         currentTime = maxTime;
         casillas = GameObject.FindGameObjectsWithTag("CasillaDeColor");        
@@ -48,7 +39,8 @@ public class LevelMagament : MonoBehaviour
             currentTime = maxTime;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        Pause();
+        DetectPause();
+        
     }
     private void FixedUpdate()
     {
@@ -79,23 +71,27 @@ public class LevelMagament : MonoBehaviour
     }
     public void Pause()
     {
+
         if (paused)
         {
-           
+            paused = false;
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
         }
         else
         {
-             
+            paused = true;
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
 
         }
     }
     public void DetectPause()
-    {
-        paused = !paused;        
+    { 
+        if (_inputMan.enterButton) {            
+            Pause();
+        }
+               
     }
 
     public void SphereTakeColor(GameObject playerG, GameObject sphereG)
