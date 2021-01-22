@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    public LevelMagament Lvlmgnt;
     ParticleSystem colorExplotion;
     public bool lateralDetect = true;
     public float forceJumpImpulse = 0.2f;
@@ -90,10 +89,8 @@ public class PlayerCtrl : MonoBehaviour
         Gravity();
     }
     private void FixedUpdate()
-    {
-        
-        Move();
-        
+    {        
+        Move();       
     }
     // Opcion 1  -   Climb Con Raycast ( el que estaba )
     //-------------------------------------------------------------------------------------
@@ -485,37 +482,6 @@ public class PlayerCtrl : MonoBehaviour
 
     }
 
-
-
-
-
-    public void OnTriggerEnter(Collider other)
-    {
-        //        //cambiar ffefw
-        //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
-        //        //la condicion del if debe fijarse si se puede tomar el color o no 
-        Material auxM;
-        bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
-        if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
-        {
-            auxM = other.gameObject.GetComponent<Renderer>().sharedMaterial;
-            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-            Lvlmgnt.SphereTakeColor(this.gameObject, other.gameObject);
-            player.almacenarColores(auxM);
-            player.escogerColor();
-            
-            invM.addItem(player.materiales);
-            if (other.gameObject.tag == "Finish")
-
-            {
-                Destroy(other.gameObject);
-            }
-            
-            //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
-        }
-
-    }
-
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
@@ -564,41 +530,7 @@ public class PlayerCtrl : MonoBehaviour
         }      
     }
 
-   /* private void OnDash(InputValue inputvalue)
-    {
-         Dash();
-    }
-    private void OnMove(InputValue inputvalue)
-    {
-        Vector2 inputmove = inputvalue.Get<Vector2>();
-        moveH = inputmove.x;
-        Debug.Log(moveH);
-    }
-    private void OnJump(InputValue inputvalue)
-    {
-        Debug.Log("Entro");
-        realizedB = true;
-        Jump();
-
-    }
-    private void OnJumpR()
-    {
-        Debug.Log("EntroR");
-        realizedB = false;
-    }
-     private void OnEnable()
-     {
-
-         inputAction.Enable();
-     }
-     private void OnDisable()
-     {
-
-         inputAction.Disable();
-     }
-
-
-    */
+    
     /// <summary>
     /// collision trigers
     /// </summary>
@@ -653,26 +585,26 @@ public class PlayerCtrl : MonoBehaviour
         isGrounded = false;
         //debug.log("collision exit");
     }
-    //public void OnTriggerEnter(Collider other)
-    //{
-    //    //        //cambiar ffefw
-    //    //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
-    //    //        //la condicion del if debe fijarse si se puede tomar el color o no 
+    public void OnTriggerEnter(Collider other)
+    {
+        //        //cambiar ffefw
+        //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
+        //        //la condicion del if debe fijarse si se puede tomar el color o no 
 
-    //    bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
-    //    if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
-    //    {
-    //        this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-    //        player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
-    //        player.escogerColor();
+        bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
+        if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
+        {
+            this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
+            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
+            player.escogerColor();
 
-    //        invM.addItem(player.materiales);
-    //        if (other.gameObject.tag == "Finish")
-    //        {
-    //            Destroy(other.gameObject);
-    //        }
+            invM.addItem(player.materiales);
+            if (other.gameObject.tag == "Finish")
+            {
+                Destroy(other.gameObject);
+            }
             //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
-        //}
+        }
 
-    
+    }
 }
