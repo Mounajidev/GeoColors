@@ -317,7 +317,7 @@ public class PlayerCtrl : MonoBehaviour
 
         activeDash = false;
         yield return new WaitForSeconds(dashDuration);
-        rb.velocity = Vector3.zero;
+        //rb.velocity = Vector3.zero;
         activeDash = true;
     }
     void Move()
