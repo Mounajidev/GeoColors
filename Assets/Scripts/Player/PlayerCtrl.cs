@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerCtrl : MonoBehaviour
 {
+    public LevelMagament Lvlmgnt;
     ParticleSystem colorExplotion;
     public bool lateralDetect = true;
     public float forceJumpImpulse = 0.2f;
@@ -536,19 +537,23 @@ public class PlayerCtrl : MonoBehaviour
         //        //cambiar ffefw
         //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
         //        //la condicion del if debe fijarse si se puede tomar el color o no 
-
+        Material auxM;
         bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
+            auxM = other.gameObject.GetComponent<Renderer>().sharedMaterial;
             this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial) ;
+            Lvlmgnt.SphereTakeColor(this.gameObject, other.gameObject);
+            player.almacenarColores(auxM);
             player.escogerColor();
             
             invM.addItem(player.materiales);
             if (other.gameObject.tag == "Finish")
+
             {
                 Destroy(other.gameObject);
             }
+            
             //  this.gameObject.GetComponentInChildren<Renderer>().sharedMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
         }
 

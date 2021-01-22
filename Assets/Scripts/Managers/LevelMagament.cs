@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 public class LevelMagament : MonoBehaviour
 {
+    GameObject SphereC;
     public GameObject pauseMenu;
     public GameObject player;
     public GameObject[] casillas;
@@ -96,4 +97,14 @@ public class LevelMagament : MonoBehaviour
     {
         paused = !paused;        
     }
+
+    public void SphereTakeColor(GameObject playerG, GameObject sphereG)
+    {
+        sphereG.gameObject.GetComponent<Renderer>().sharedMaterial = playerG.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+        if (sphereG.gameObject.GetComponent<Renderer>().sharedMaterial.name == "MaterialYellow")
+        {
+            SphereC.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.name
+        }
+    }
+
 }
