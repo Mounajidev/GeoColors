@@ -1,11 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< Updated upstream
-
-=======
  
->>>>>>> Stashed changes
 public class PlayerCtrl : MonoBehaviour
 {
     public LevelMagament lvlMngnt;
@@ -595,13 +591,27 @@ public class PlayerCtrl : MonoBehaviour
         //        //la condicion del if debe fijarse si se puede tomar el color o no 
         
         bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
+       
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
+            GameObject aux =GameObject.Instantiate(other.gameObject); 
+            
+            
+            
             lvlMngnt.SphereTakeColor(this.gameObject, other.gameObject);
+
+        
+            
             this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
-            player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
+            
+            player.almacenarColores(aux.GetComponent<Renderer>().sharedMaterial);
+            
             player.escogerColor();
+            
+            
+            
             invM.addItem(player.materiales);
+
             if (other.gameObject.tag == "Finish")
             {
                 Destroy(other.gameObject);
