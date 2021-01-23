@@ -39,6 +39,7 @@ public class PlayerCtrl : MonoBehaviour
     public bool chocar;
     float auxV;
     [Header("Configuration for Item")]
+    [Header("Configuration for Item")]
     public InventoryManager invM;    
     //private bool realizedB ;
     [Header("Input")]
@@ -313,11 +314,8 @@ public class PlayerCtrl : MonoBehaviour
         // Dash Opcion 3 ---
         rb.velocity = Vector3.forward * dashForce * facing;
 
-
-
         activeDash = false;
-        yield return new WaitForSeconds(dashDuration);
-        rb.velocity = Vector3.zero;
+        yield return new WaitForSeconds(dashDuration);        
         activeDash = true;
     }
     void Move()
@@ -590,14 +588,13 @@ public class PlayerCtrl : MonoBehaviour
         //        //cambiar ffefw
         //        //hay que hacer un contador de tiempo para que le devuelva el color a la esfera que da el color 
         //        //la condicion del if debe fijarse si se puede tomar el color o no 
-
+        
         bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
             this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
             player.escogerColor();
-
             invM.addItem(player.materiales);
             if (other.gameObject.tag == "Finish")
             {
