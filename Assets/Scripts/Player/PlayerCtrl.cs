@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour
 {
+    public LevelMagament lvlMngnt;
     ParticleSystem colorExplotion;
     public bool lateralDetect = true;
     public float forceJumpImpulse = 0.2f;
@@ -592,6 +593,7 @@ public class PlayerCtrl : MonoBehaviour
         bool existe = player.existeColor(other.gameObject.GetComponent<Renderer>().sharedMaterial);
         if (other.gameObject.layer == Constans.LAYERCOLORSPHERE && !existe)
         {
+            lvlMngnt.SphereTakeColor(this.gameObject, other.gameObject);
             this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             player.almacenarColores(other.gameObject.GetComponent<Renderer>().sharedMaterial);
             player.escogerColor();
