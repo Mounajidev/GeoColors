@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coloresEnInventario:
   - id: 0
-    nombre: SinColor
+    nombre: MaterialNoColor
     sprite: {fileID: 1226457414214035694, guid: 665180fdf8847024ca34897ec4101296,
       type: 3}
   - id: 1

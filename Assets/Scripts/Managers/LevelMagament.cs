@@ -16,6 +16,7 @@ public class LevelMagament : MonoBehaviour
     bool paused;
     // Start is called before the first frame update
     public InputManager _inputMan;
+ 
     private void Awake()
     {
         //impCanvas = new InpCanvas();
@@ -97,9 +98,10 @@ public class LevelMagament : MonoBehaviour
     public void SphereTakeColor(GameObject playerG, GameObject sphereG)
     {
         sphereG.gameObject.GetComponent<Renderer>().sharedMaterial = playerG.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
+         
         if (sphereG.gameObject.GetComponent<Renderer>().sharedMaterial.name == "MaterialYellow")
         {
-            //SphereC.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.name
+                //SphereC.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.name
         }
     }
 

@@ -7,9 +7,9 @@ public class Character
     GameObject character;
     //Material materialActual; esta variable puede servir si quiero mas de 2 colores
     public List<Material> materiales;
-    public Character(GameObject charac) {
+    public Character(GameObject charac, List<Material> lmaterial) {
         this.character = charac;
-        materiales = new List<Material>();
+        materiales = lmaterial;
       
     }
     public bool existeColor(Material mat)
@@ -21,19 +21,19 @@ public class Character
     }
     public void almacenarColores(Material mat)
     {
-        if (materiales.Count < 2)
-         //cambiar logica en caso que se quiera n colores 
+       /* if (materiales.Count < 2)
+         //cambiar logica en caso que se quiera mas de 2 colores 
         {
             materiales.Add(mat);
             if (materiales.Count == 2)
             {
                 reodenarColor();
             }
-        }
-        else
-        {
+        }*/
+       // else
+        //{
             materiales[0] = mat;
-        }
+        //}
         
     }
     public bool tengoColor()

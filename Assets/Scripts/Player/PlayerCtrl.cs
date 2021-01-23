@@ -4,6 +4,7 @@ using UnityEngine;
  
 public class PlayerCtrl : MonoBehaviour
 {
+    public List<Material> noColor;
     public LevelMagament lvlMngnt;
     ParticleSystem colorExplotion;
     public bool lateralDetect = true;
@@ -54,7 +55,7 @@ public class PlayerCtrl : MonoBehaviour
        // realizedB = true;
         colorExplotion = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
-        player = new Character(this.gameObject);
+        player = new Character(this.gameObject, noColor);
         rb = GetComponent<Rigidbody>();
         formControl = this.GetComponent<FormCtrl>();
         raydect = GetComponent<RaycastDetection>();
@@ -600,8 +601,7 @@ public class PlayerCtrl : MonoBehaviour
             
             lvlMngnt.SphereTakeColor(this.gameObject, other.gameObject);
 
-        
-            
+                   
             this.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
             
             player.almacenarColores(aux.GetComponent<Renderer>().sharedMaterial);
