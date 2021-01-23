@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+<<<<<<< Updated upstream
 
+=======
+ 
+>>>>>>> Stashed changes
 public class PlayerCtrl : MonoBehaviour
 {
     public LevelMagament lvlMngnt;

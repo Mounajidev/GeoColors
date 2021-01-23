@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+<<<<<<< Updated upstream
 
+=======
+ 
+>>>>>>> Stashed changes
 public class LevelMagament : MonoBehaviour
 {
     GameObject SphereC;
@@ -31,8 +35,12 @@ public class LevelMagament : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+<<<<<<< Updated upstream
     {
         
+=======
+    { 
+>>>>>>> Stashed changes
         currentTime -= Time.deltaTime;
         c.text = "Tiempo Hasta Despertar:"+Mathf.RoundToInt(currentTime).ToString();
         if (currentTime <= 0) {
