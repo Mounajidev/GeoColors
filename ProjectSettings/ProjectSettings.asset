@@ -767,10 +767,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 996c02e6-501d-453e-8f12-51ed29109828
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: GeometricColors
+  organizationId: jeffersonperezinfo
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
