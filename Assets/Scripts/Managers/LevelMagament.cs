@@ -16,7 +16,7 @@ public class LevelMagament : MonoBehaviour
     bool paused;
     // Start is called before the first frame update
     public InputManager _inputMan;
- 
+    public BloomM bloomMaterials;
     private void Awake()
     {
         //impCanvas = new InpCanvas();
@@ -98,11 +98,17 @@ public class LevelMagament : MonoBehaviour
     public void SphereTakeColor(GameObject playerG, GameObject sphereG)
     {
         sphereG.gameObject.GetComponent<Renderer>().sharedMaterial = playerG.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial;
-         
-        if (sphereG.gameObject.GetComponent<Renderer>().sharedMaterial.name == "MaterialYellow")
+        Material mat = sphereG.gameObject.GetComponent<Renderer>().sharedMaterial;
+        for (int i = 0; i < bloomMaterials.coloresBloomList.Length; i++)
         {
-                //SphereC.transform.GetChild(0).GetComponent<Renderer>().sharedMaterial.name
+            if ((string.Compare(bloomMaterials.coloresBloomList[i].bloomM.name, mat.name) == 0))
+            {
+                sphereG.transform.GetChild(0).gameObject.GetComponent<Renderer>().sharedMaterial = bloomMaterials.coloresBloomList[i].bloomM;
+                break;
+            }
+
         }
+       
     }
 
 }
